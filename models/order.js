@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     totalAmount: DataTypes.INTEGER,
     status: DataTypes.STRING,
     paymentMethod: DataTypes.STRING,
-    CustomerId: DataTypes.INTEGER
+    CustomerId: DataTypes.INTEGER,
+    paidAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Order',
