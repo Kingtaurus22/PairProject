@@ -1,0 +1,20 @@
+[
+    {
+        "username": "shania",
+        "email": "shania@vendra.test",
+        "password": "123456",
+        "role": "seller"
+    },
+    {
+        "username": "olga",
+        "email": "olga@vendra.test",
+        "password": "123456",
+        "role": "customer"
+    },
+    {
+        "username": "seller1",
+        "email": "seller1@vendra.test",
+        "password": "123456",
+        "role": "seller"
+    }
+]
