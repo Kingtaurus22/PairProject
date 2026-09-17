@@ -111,39 +111,103 @@ class Controller {
 
     static async home(req, res) {
         try {
-            const { search, sort } = req.query;
+            const { search, sort, category } = req.query;
 
-            let order = [["createdAt", "DESC"]];
+            const products = await Product.getProducts(search, category, sort);
 
-            if (sort === "price_asc") {
-                order = [["price", "ASC"]];
-            }
-
-            if (sort === "price_desc") {
-                order = [["price", "DESC"]];
-            }
-
-            const products = await Product.findAll({
-                where: search
-                    ? {
-                        productName: {
-                            [Op.iLike]: `%${search}%`,
-                        },
-                    }
-                    : undefined,
-
-                include: Category,
-
-                order,
+            const categories = await Category.findAll({
+                order: [["categoryName", "ASC"]],
             });
+
+            const user = await User.findByPk(req.session.userId);
 
             res.render("home", {
                 title: "Vendra",
                 products,
+                categories,
                 search,
                 sort,
+                category,
+                username: user.username,
                 formatRp
             });
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
+
+    static async getProfile(req, res) {
+        try {
+            const user = await User.findByPk(req.session.userId, {
+                include: {
+                    model: Profile,
+                },
+            });
+
+            res.render("profile", {
+                title: "My Profile",
+                user,
+                profile: user.Profile,
+            });
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
+
+    static async getEditProfile(req, res) {
+        try {
+            const user = await User.findByPk(req.session.userId, {
+                include: {
+                    model: Profile,
+                },
+            });
+
+            res.render("profile-edit", {
+                title: "Edit Profile",
+                user,
+                profile: user.Profile,
+            });
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
+
+    static async postProfile(req, res) {
+        try {
+            const { fullName, phoneNumber, address } = req.body;
+
+            const profile = await Profile.findOne({
+                where: {
+                    UserId: req.session.userId,
+                },
+            });
+
+            if (profile) {
+                await Profile.update(
+                    {
+                        fullName,
+                        phoneNumber,
+                        address,
+                    },
+                    {
+                        where: {
+                            UserId: req.session.userId,
+                        },
+                    },
+                );
+            } else {
+                await Profile.create({
+                    fullName,
+                    phoneNumber,
+                    address,
+                    UserId: req.session.userId,
+                });
+            }
+
+            res.redirect("/profile");
         } catch (error) {
             console.log(error);
             res.send(error);
@@ -236,7 +300,7 @@ class Controller {
             res.send(`Product ${product.productName} berhasil ditambahkan ke cart`);
         } catch (error) {
             console.log(error);
-            res.status(500).send(error);
+            res.send(error);
         }
     }
 
@@ -322,7 +386,7 @@ class Controller {
 
             order.totalAmount = orderItems.reduce((total, item) => {
                 return total + item.priceAtPurchase * item.quantity;
-            }, 0);
+            }, order.totalOngkir);
 
             await order.save();
 
@@ -380,7 +444,7 @@ class Controller {
 
             order.totalAmount = orderItems.reduce((total, item) => {
                 return total + item.priceAtPurchase * item.quantity;
-            }, 0);
+            }, order.totalOngkir);
 
             await order.save();
 

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/profile/profile.css" />
+  </head>
+
+  <body>
+    <div class="page-container">
+      <!-- NAVBAR -->
+      <header class="navbar">
+        <div class="brand">
+          <div class="brand-logo">V</div>
+
+          <div class="brand-info">
+            <h1>Vendra</h1>
+            <span>Marketplace</span>
+          </div>
+        </div>
+
+        <div class="navbar-actions">
+          <a href="/" class="nav-link"> Products </a>
+
+          <a href="/cart" class="nav-link"> Cart </a>
+
+          <a href="/orders" class="nav-link"> My Orders </a>
+
+          <a href="/profile" class="profile-button"> <%= user.username %> </a>
+        </div>
+      </header>
+
+      <!-- PROFILE -->
+      <main class="profile-section">
+        <div class="section-label">VENDRA ACCOUNT</div>
+
+        <div class="profile-header">
+          <div>
+            <h2>Edit Profile</h2>
+
+            <p>Update your account information</p>
+          </div>
+        </div>
+
+        <!-- PROFILE CARD -->
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <div class="profile-icon">
+              <%= user.username.charAt(0).toUpperCase() %>
+            </div>
+
+            <div>
+              <h3><%= user.username %></h3>
+
+              <span> <%= user.role %> </span>
+            </div>
+          </div>
+
+          <div class="profile-divider"></div>
+
+          <!-- EDIT FORM -->
+          <form action="/profile" method="POST" class="profile-form">
+            <div class="profile-info">
+              <!-- USERNAME -->
+              <div class="info-item">
+                <span class="info-label"> Username </span>
+
+                <p><%= user.username %></p>
+              </div>
+
+              <!-- EMAIL -->
+              <div class="info-item">
+                <span class="info-label"> Email </span>
+
+                <p><%= user.email %></p>
+              </div>
+
+              <!-- FULL NAME -->
+              <div class="info-item">
+                <label for="fullName" class="info-label"> Full Name </label>
+
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value="<%= profile ? profile.fullName || '' : '' %>"
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <!-- PHONE NUMBER -->
+              <div class="info-item">
+                <label for="phoneNumber" class="info-label">
+                  Phone Number
+                </label>
+
+                <input
+                  type="text"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value="<%= profile ? profile.phoneNumber || '' : '' %>"
+                  placeholder="Enter your phone number"
+                />
+              </div>
+
+              <!-- ADDRESS -->
+              <div class="info-item address-item">
+                <label for="address" class="info-label"> Address </label>
+
+                <textarea
+                  id="address"
+                  name="address"
+                  placeholder="Enter your address"
+                >
+<%= profile ? profile.address || '' : '' %></textarea
+                >
+              </div>
+            </div>
+
+            <!-- ACTION -->
+            <div class="profile-actions">
+              <a href="/profile" class="back-button"> Cancel </a>
+
+              <button type="submit" class="save-button">Save Profile</button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

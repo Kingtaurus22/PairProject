@@ -9,67 +9,204 @@
   <title>
     <%= title %>
   </title>
+
+  <link rel="stylesheet" href="/home/home.css" />
 </head>
 
 <body>
-  <h1>Vendra</h1>
 
-  <form action="/" method="GET">
-    <input type="text" name="search" placeholder="Search product..." value="<%= search || '' %>" />
+  <div class="page-container">
 
-    <select name="sort" onchange="this.form.submit()">
-      <option value="">Newest</option>
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-      <option value="price_asc" <%=sort==="price_asc" ? "selected" : "" %>
-        >
-        Price: Low to High
-      </option>
+      <div class="brand">
 
-      <option value="price_desc" <%=sort==="price_desc" ? "selected" : "" %>
-        >
-        Price: High to Low
-      </option>
-    </select>
+        <div class="brand-logo">
+          V
+        </div>
 
-    <button type="submit">Search</button>
-  </form>
+        <div class="brand-info">
+          <h1>Vendra</h1>
+          <span>Marketplace</span>
+        </div>
 
-  <h2>Products</h2>
+      </div>
 
-  <% if (products.length===0) { %>
 
-    <p>Product tidak ditemukan.</p>
+      <div class="navbar-actions">
 
-    <% } else { %>
+        <a href="/cart" class="nav-link">
+          Cart
+        </a>
 
-      <% products.forEach(product=> { %>
+        <a href="/orders" class="nav-link">
+          My Orders
+        </a>
+
+        <a href="/profile" class="profile-button">
+          <%= username %>
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <!-- SEARCH & FILTER -->
+    <form action="/" method="GET" class="filter-card">
+
+      <div class="search-box">
+
+        <span>⌕</span>
+
+        <input type="text" name="search" placeholder="Search product..." value="<%= search || '' %>" />
+
+      </div>
+
+
+      <select name="category" onchange="this.form.submit()">
+
+        <option value="">
+          Semua Kategori
+        </option>
+
+        <% categories.forEach(el=> { %>
+
+          <option value="<%= el.id %>" <%=category && String(category)===String(el.id) ? "selected" : "" %>
+            >
+            <%= el.categoryName %>
+          </option>
+
+          <% }) %>
+
+      </select>
+
+
+      <select name="sort" onchange="this.form.submit()">
+
+        <option value="">
+          Newest
+        </option>
+
+        <option value="price_asc" <%=sort==="price_asc" ? "selected" : "" %>
+          >
+          Price: Low to High
+        </option>
+
+        <option value="price_desc" <%=sort==="price_desc" ? "selected" : "" %>
+          >
+          Price: High to Low
+        </option>
+
+      </select>
+
+
+      <button type="submit" class="search-button">
+        Search
+      </button>
+
+    </form>
+
+
+    <!-- PRODUCTS -->
+
+    <section class="products-section">
+
+      <div class="section-header">
 
         <div>
+          <span class="section-label">
+            VENDRA MARKETPLACE
+          </span>
+
+          <h2>
+            Products
+          </h2>
+        </div>
+
+        <span class="product-count">
+          <%= products.length %> Products
+        </span>
+
+      </div>
+
+
+      <% if (products.length===0) { %>
+
+        <div class="empty">
+
+          <div class="empty-icon">
+            🛒
+          </div>
+
           <h3>
-            <a href="/products/<%= product.id %>">
-              <%= product.productName %>
-            </a>
+            Product tidak ditemukan
           </h3>
 
           <p>
-            Price: <%= formatRp(product.price) %>
+            Coba gunakan kata kunci atau kategori lain.
           </p>
 
-          <p>
-            Stock: <%= product.stock %>
-          </p>
-
-          <p>
-            Category:
-            <%= product.Category.categoryName %>
-          </p>
         </div>
 
-        <hr />
 
-        <% }) %>
+        <% } else { %>
+
+
+          <div class="product-grid">
+
+            <% products.forEach(product=> { %>
+
+              <div class="product-card">
+
+                <div class="product-image">
+                  <img src="<%= product.imageURL %>" alt="<%= product.productName %>" />
+                </div>
+
+                <div class="product-content">
+
+                  <span class="category">
+                    <%= product.Category.categoryName %>
+                  </span>
+
+                  <h3>
+                    <a href="/products/<%= product.id %>">
+                      <%= product.productName %>
+                    </a>
+                  </h3>
+
+                  <p class="price">
+                    Rp <%= product.price.toLocaleString("id-ID") %>
+                  </p>
+
+                  <div class="product-footer">
+
+                    <span>
+                      Stock: <%= product.stock %>
+                    </span>
+
+                    <a href="/products/<%= product.id %>" class="detail-button">
+                      View →
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <% }) %>
+
+          </div>
+
 
           <% } %>
+
+    </section>
+
+  </div>
+
 </body>
 
 </html>
