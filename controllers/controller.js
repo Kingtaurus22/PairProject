@@ -6,10 +6,8 @@ const {
   OrderItem,
   Profile,
 } = require("../models");
-const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const { formatRp } = require("../helpers/helper");
-// const easyinvoice = require("easyinvoice");
 
 class Controller {
   // Auth
@@ -159,6 +157,7 @@ class Controller {
 
   static async getEditProfile(req, res) {
     try {
+      const { errors } = req.query;
       const user = await User.findByPk(req.session.userId, {
         include: {
           model: Profile,
@@ -169,6 +168,7 @@ class Controller {
         title: "Edit Profile",
         user,
         profile: user.Profile,
+        errors,
       });
     } catch (error) {
       console.log(error);
@@ -210,23 +210,32 @@ class Controller {
 
       res.redirect("/profile");
     } catch (error) {
-      console.log(error);
-      res.send(error);
+      if (error.name === "SequelizeValidationError") {
+        let errors = error.errors.map((el) => el.message);
+        res.redirect(`/profile/edit?errors=${errors}`);
+      } else {
+        res.send(error);
+      }
     }
   }
 
   static async productDetail(req, res) {
     try {
       const { id } = req.params;
+      const { message } = req.query;
 
       const product = await Product.findByPk(id, {
         include: [Category, User],
       });
 
+      const user = await User.findByPk(req.session.userId);
+
       res.render("productDetail", {
         title: product.productName,
         product,
         formatRp,
+        username: user.username,
+        message,
       });
     } catch (error) {
       console.log(error);
@@ -239,14 +248,6 @@ class Controller {
       const { productId } = req.params;
 
       const product = await Product.findByPk(productId);
-
-      if (!product) {
-        return res.send("Product tidak ditemukan");
-      }
-
-      if (product.stock <= 0) {
-        return res.send("Stock product habis");
-      }
 
       const customerId = req.session.userId;
 
@@ -298,7 +299,9 @@ class Controller {
 
       await order.save();
 
-      res.send(`Product ${product.productName} berhasil ditambahkan ke cart`);
+      res.redirect(
+        `/products/${product.id}?message=Product ${product.productName} berhasil ditambahkan ke cart`,
+      );
     } catch (error) {
       console.log(error);
       res.send(error);
@@ -496,10 +499,6 @@ class Controller {
         },
       });
 
-      if (!order) {
-        return res.send("Cart masih kosong");
-      }
-
       const orderItems = await OrderItem.findAll({
         where: {
           OrderId: order.id,
@@ -509,10 +508,6 @@ class Controller {
         },
         order: [["createdAt", "ASC"]],
       });
-
-      if (orderItems.length === 0) {
-        return res.send("Cart masih kosong");
-      }
 
       res.render("checkout", {
         title: "Checkout",
@@ -541,10 +536,6 @@ class Controller {
         },
       });
 
-      if (!order) {
-        return res.send("Cart masih kosong");
-      }
-
       const orderItems = await OrderItem.findAll({
         where: {
           OrderId: order.id,
@@ -555,15 +546,11 @@ class Controller {
         order: [["createdAt", "ASC"]],
       });
 
-      if (orderItems.length === 0) {
-        return res.send("Cart masih kosong");
-      }
-
-      for (const item of orderItems) {
-        if (item.quantity > item.Product.stock) {
-          return res.send(`Stock ${item.Product.productName} tidak mencukupi`);
-        }
-      }
+      //   for (const item of orderItems) {
+      //     if (item.quantity > item.Product.stock) {
+      //       return res.send(`Stock ${item.Product.productName} tidak mencukupi`);
+      //     }
+      //   }
 
       for (const item of orderItems) {
         item.Product.stock -= item.quantity;
@@ -602,10 +589,13 @@ class Controller {
         order: [["createdAt", "DESC"]],
       });
 
+      const user = await User.findByPk(customerId);
+
       res.render("orders", {
         title: "My Orders",
         orders,
         formatRp,
+        username: user.username,
       });
     } catch (error) {
       console.log(error);
@@ -635,10 +625,6 @@ class Controller {
           },
         ],
       });
-
-      if (!order) {
-        return res.send("Order tidak ditemukan");
-      }
 
       const products = order.Products.map((product) => {
         return {

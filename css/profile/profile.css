@@ -17,16 +17,12 @@ body {
   color: #26364d;
 
   background:
-    radial-gradient(
-      circle at 15% 10%,
+    radial-gradient(circle at 15% 10%,
       rgba(77, 166, 255, 0.15),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 85% 80%,
+      transparent 28%),
+    radial-gradient(circle at 85% 80%,
       rgba(0, 153, 255, 0.12),
-      transparent 28%
-    ),
+      transparent 28%),
     #f5f9fd;
 }
 
@@ -508,4 +504,57 @@ a {
 
     text-align: center;
   }
+}
+
+/* =========================
+   VALIDATION ERROR
+========================= */
+
+.error-container {
+  margin-bottom: 24px;
+}
+
+.error-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 14px 18px;
+
+  background: #fff5f5;
+  border: 1px solid #ffd6d6;
+  border-left: 4px solid #ef4444;
+
+  border-radius: 12px;
+
+  color: #b42318;
+  font-size: 14px;
+  line-height: 1.5;
+
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.06);
+
+  margin-bottom: 10px;
+}
+
+.error-icon {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fee2e2;
+  color: #dc2626;
+
+  border-radius: 50%;
+
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.error-message {
+  padding-top: 1px;
 }
