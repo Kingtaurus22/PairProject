@@ -2,38 +2,204 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    <%= title %>
+    <%= title %> - Vendra
   </title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="/productDetail/style.css">
 </head>
 
 <body>
-  <a href="/">← Back to Products</a>
 
-  <h1>
-    <%= product.productName %>
-  </h1>
+  <% if (message) { %>
+    <script>
+      alert("<%= message %>");
+    </script>
+    <% } %>
 
-  <p>Category: <%= product.Category.categoryName %>
-  </p>
+      <!-- Navbar -->
+      <nav class="navbar">
+        <div class="container">
 
-  <p>Seller: <%= product.User.username %>
-  </p>
+          <div class="d-flex align-items-center">
 
-  <p>Price: <%= formatRp(product.price) %>
-  </p>
+            <div class="brand-box me-3">
+              V
+            </div>
 
-  <p>Stock: <%= product.stock %>
-  </p>
+            <div>
+              <div class="brand-name">
+                Vendra
+              </div>
 
-  <p>Product ID: <%= product.id %>
-  </p>
-  <form action="/orders/cart/add/<%= product.id %>" method="POST">
-    <button type="submit">Add to Cart</button>
-  </form>
+              <div class="brand-subtitle">
+                Marketplace
+              </div>
+            </div>
+
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+
+            <a href="/cart" class="nav-link">
+              Cart
+            </a>
+
+            <a href="/orders" class="nav-link">
+              My Orders
+            </a>
+
+            <a href="/profile" class="text-decoration-none ms-2">
+              <span class="user-button">
+                <%= username %>
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+      </nav>
+
+
+      <!-- Main Content -->
+      <main class="container py-4 pb-5">
+
+        <!-- Back -->
+        <div class="mb-4">
+          <a href="/" class="back-link">
+            <i class="bi bi-arrow-left"></i>
+            Back to Products
+          </a>
+        </div>
+
+
+        <!-- Product Detail -->
+        <div class="detail-card">
+
+          <div class="row g-5 align-items-center">
+
+            <!-- Product Image -->
+            <div class="col-lg-6">
+
+              <div class="product-image-wrapper">
+
+                <img src="<%= product.imageURL %>" alt="<%= product.productName %>" class="product-image">
+
+              </div>
+
+            </div>
+
+
+            <!-- Product Information -->
+            <div class="col-lg-6">
+
+              <span class="category-badge">
+                <%= product.Category.categoryName %>
+              </span>
+
+
+              <h1 class="product-title">
+                <%= product.productName %>
+              </h1>
+
+
+              <!-- Seller -->
+              <div class="seller-info">
+
+                <div class="seller-icon">
+                  <i class="bi bi-shop"></i>
+                </div>
+
+                <div>
+                  <small class="d-block text-secondary">
+                    Sold by
+                  </small>
+
+                  <strong>
+                    <%= product.User.username %>
+                  </strong>
+                </div>
+
+              </div>
+
+
+              <!-- Price -->
+              <div class="price">
+                <%= formatRp(product.price) %>
+              </div>
+
+
+              <!-- Product Info -->
+              <div class="info-box">
+
+                <div class="row justify-content-center">
+
+                  <div class="col">
+
+                    <div class="info-label">
+                      Stock
+                    </div>
+
+                    <div class="info-value stock-available">
+                      <i class="bi bi-box-seam me-1"></i>
+
+                      <%= product.stock %> available
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <!-- Add Cart -->
+              <% if (product.stock> 0) { %>
+
+                <form action="/orders/cart/add/<%= product.id %>" method="POST">
+
+                  <button type="submit" class="add-cart-btn">
+                    <i class="bi bi-cart-plus me-2"></i>
+                    Add to Cart
+                  </button>
+
+                </form>
+
+                <% } else { %>
+
+                  <button type="button" class="out-stock-btn" disabled>
+                    <i class="bi bi-x-circle me-2"></i>
+                    Out of Stock
+                  </button>
+
+                  <% } %>
+
+
+                    <div class="product-id text-center">
+                      Secure shopping with Vendra Marketplace
+                    </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+      </script>
+
 </body>
 
 </html>
