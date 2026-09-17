@@ -9,82 +9,326 @@
   <title>
     <%= title %>
   </title>
+
+  <link rel="stylesheet" href="/checkout/checkout.css" />
 </head>
 
 <body>
-  <a href="/cart">← Back to Cart</a>
 
-  <h1>Checkout</h1>
+  <div class="page-container">
 
-  <h2>Order Summary</h2>
+    <!-- NAVBAR -->
 
-  <% orderItems.forEach(item=> { %>
-    <div>
-      <h3>
-        <%= item.Product.productName %>
-      </h3>
+    <header class="navbar">
 
-      <p>
-        Price:
-        <%= formatRp(item.priceAtPurchase) %>
-      </p>
+      <div class="brand">
 
-      <p>
-        Quantity:
-        <%= item.quantity %>
-      </p>
+        <div class="brand-logo">
+          V
+        </div>
 
-      <p>
-        Subtotal:
-        <%= formatRp(item.subTotal) %>
-      </p>
+        <div class="brand-info">
+          <h1>Vendra</h1>
+          <span>Marketplace</span>
+        </div>
 
-      <hr />
-    </div>
-    <% }) %>
+      </div>
 
-      <h2>
-        Total:
-        <%= formatRp(order.totalAmount) %>
-      </h2>
 
-      <h2>Payment Method</h2>
+      <div class="navbar-actions">
+
+        <a href="/" class="nav-link">
+          Products
+        </a>
+
+        <a href="/cart" class="nav-link">
+          Cart
+        </a>
+
+        <a href="/orders" class="nav-link">
+          My Orders
+        </a>
+
+        <a href="/profile" class="profile-button">
+          <%= username %>
+        </a>
+
+        <form action="/logout" method="POST">
+
+          <button type="submit" class="logout-button">
+            Logout
+          </button>
+
+        </form>
+
+      </div>
+
+    </header>
+
+
+    <!-- CHECKOUT -->
+
+    <main class="checkout-section">
+
+      <div class="section-label">
+        VENDRA CHECKOUT
+      </div>
+
+
+      <div class="checkout-header">
+
+        <div>
+
+          <h2>
+            Checkout
+          </h2>
+
+          <p>
+            Review your order and select a payment method.
+          </p>
+
+        </div>
+
+
+        <a href="/cart" class="back-button">
+          ← Back to Cart
+        </a>
+
+      </div>
+
+
+      <!-- ERROR -->
 
       <% if (errors) { %>
-        <% errors=errors.split(',') %>
-          <% errors.forEach(el=> { %>
-            <p style="color: red;">
-              <%= el %>
-            </p>
+
+        <div class="error-message">
+          <%= errors %>
+        </div>
+
+      <% } %>
+
+
+      <div class="checkout-layout">
+
+
+        <!-- ORDER ITEMS -->
+
+        <div class="order-card">
+
+          <div class="card-header">
+
+            <h3>
+              Order Items
+            </h3>
+
+            <span>
+              <%= orderItems.length %> Products
+            </span>
+
+          </div>
+
+
+          <div class="order-items">
+
+            <% orderItems.forEach(item=> { %>
+
+              <div class="order-item">
+
+
+                <div class="order-item-image">
+
+                  <img
+                    src="<%= item.Product.imageURL %>"
+                    alt="<%= item.Product.productName %>"
+                  />
+
+                </div>
+
+
+                <div class="order-item-info">
+
+                  <h4>
+                    <%= item.Product.productName %>
+                  </h4>
+
+                  <p>
+                    <%= item.quantity %> ×
+                    <%= formatRp(item.priceAtPurchase) %>
+                  </p>
+
+                </div>
+
+
+                <strong class="item-total">
+
+                  <%= formatRp(item.priceAtPurchase * item.quantity) %>
+
+                </strong>
+
+              </div>
+
             <% }) %>
-              <% } %>
 
-                <form action="/checkout" method="POST">
-                  <label>
-                    <input type="radio" name="paymentMethod" value="Bank Transfer" />
+          </div>
+
+        </div>
+
+
+        <!-- PAYMENT + SUMMARY -->
+
+        <aside class="checkout-summary">
+
+
+          <!-- PAYMENT -->
+
+          <div class="payment-card">
+
+            <h3>
+              Payment Method
+            </h3>
+
+
+            <form action="/checkout" method="POST">
+
+
+              <label class="payment-option">
+
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="Bank Transfer"
+                  
+                />
+
+                <div>
+
+                  <strong>
                     Bank Transfer
-                  </label>
+                  </strong>
 
-                  <br />
+                  <span>
+                    Transfer pembayaran melalui bank
+                  </span>
 
-                  <label>
-                    <input type="radio" name="paymentMethod" value="E-Wallet" />
-                    E-Wallet
-                  </label>
+                </div>
 
-                  <br />
+              </label>
 
-                  <label>
-                    <input type="radio" name="paymentMethod" value="Cash" />
+
+              <label class="payment-option">
+
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="Cash"
+                />
+
+                <div>
+
+                  <strong>
                     Cash
-                  </label>
+                  </strong>
 
-                  <br /><br />
+                  <span>
+                    Pembayaran secara langsung
+                  </span>
 
-                  <button type="submit">
-                    Place Order
-                  </button>
-                </form>
+                </div>
+
+              </label>
+
+
+              <label class="payment-option">
+
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="E-Wallet"
+                />
+
+                <div>
+
+                  <strong>
+                    E-Wallet
+                  </strong>
+
+                  <span>
+                    Pembayaran menggunakan e-wallet
+                  </span>
+
+                </div>
+
+              </label>
+
+
+              <!-- SUMMARY -->
+
+              <div class="summary-divider"></div>
+
+
+              <div class="summary-row">
+
+                <span>
+                  Total Products
+                </span>
+
+                <span>
+                  <%= formatRp(order.totalAmount - order.totalOngkir) %>
+                </span>
+
+              </div>
+
+
+              <div class="summary-row">
+
+                <span>
+                  Total Ongkir
+                </span>
+
+                <span>
+                  <%= formatRp(order.totalOngkir) %>
+                </span>
+
+              </div>
+
+
+              <div class="summary-divider"></div>
+
+
+              <div class="summary-row total-row">
+
+                <span>
+                  Total Payment
+                </span>
+
+                <strong>
+                  <%= formatRp(order.totalAmount) %>
+                </strong>
+
+              </div>
+
+
+              <button
+                type="submit"
+                class="place-order-button"
+              >
+                Place Order
+              </button>
+
+
+            </form>
+
+          </div>
+
+
+        </aside>
+
+      </div>
+
+    </main>
+
+  </div>
+
 </body>
 
 </html>

@@ -3,81 +3,370 @@
 
 <head>
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>
     <%= title %>
   </title>
+
+  <link rel="stylesheet" href="/cart/cart.css" />
 </head>
 
 <body>
-  <a href="/">← Back to Products</a>
 
-  <h1>Shopping Cart</h1>
+  <div class="page-container">
 
-  <% orderItems.forEach(item=> { %>
-    <div>
-      <h2>
-        <%= item.Product.productName %>
-      </h2>
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-      <p>
-        Price:
-        <%= formatRp(item.priceAtPurchase) %>
-      </p>
+      <div class="brand">
 
-      <p>
-        Total ongkir:
-        <%= formatRp(order.totalOngkir) %>
-      </p>
+        <div class="brand-logo">
+          V
+        </div>
 
-      <div>
-        <form action="/orders/cart/update/<%= item.Product.id %>" method="POST" style="display: inline;">
-          <input type="hidden" name="quantity" value="<%= item.quantity - 1 %>" />
+        <div class="brand-info">
+          <h1>Vendra</h1>
+          <span>Marketplace</span>
+        </div>
 
-          <button type="submit">
-            -
-          </button>
-        </form>
-
-        <span>
-          <%= item.quantity %>
-        </span>
-
-        <form action="/orders/cart/update/<%= item.Product.id %>" method="POST" style="display: inline;">
-          <input type="hidden" name="quantity" value="<%= item.quantity + 1 %>" />
-
-          <button type="submit">
-            +
-          </button>
-        </form>
       </div>
 
-      <% if (errors && productId==item.Product.id) { %>
-        <p style="color: red;">
+
+      <div class="navbar-actions">
+
+        <a href="/" class="nav-link">
+          Products
+        </a>
+
+        <a href="/orders" class="nav-link">
+          My Orders
+        </a>
+
+        <a href="/profile" class="profile-button">
+          <%= username %>
+        </a>
+
+        <form action="/logout" method="POST">
+
+          <button type="submit" class="logout-button">
+            Logout
+          </button>
+
+        </form>
+
+      </div>
+
+    </header>
+
+
+    <!-- CART CONTENT -->
+
+    <main class="cart-section">
+
+      <div class="section-label">
+        VENDRA SHOPPING
+      </div>
+
+
+      <div class="cart-header">
+
+        <div>
+
+          <h2>
+            Shopping Cart
+          </h2>
+
+          <p>
+            Review your selected products before checkout.
+          </p>
+
+        </div>
+
+
+        <a href="/" class="continue-button">
+          ← Back to Products
+        </a>
+
+      </div>
+
+
+      <!-- ERROR -->
+
+      <% if (errors) { %>
+
+        <div class="error-message">
           <%= errors %>
-        </p>
-        <% } %>
+        </div>
 
-          <br />
+      <% } %>
 
-          <form action="/orders/cart/remove/<%= item.Product.id %>" method="POST">
-            <button type="submit">
-              Remove
-            </button>
-          </form>
 
-          <hr />
-    </div>
-    <% }) %>
+      <!-- CART EMPTY -->
 
-      <h2>
-        Total:
-        <%= formatRp(order.totalAmount) %>
-      </h2>
+      <% if (orderItems.length === 0) { %>
 
-      <form action="/checkout" method="GET">
-        <button type="submit">Checkout</button>
-      </form>
+        <div class="empty-cart">
+
+          <div class="empty-cart-icon">
+            🛒
+          </div>
+
+          <h3>
+            Your Cart is Empty
+          </h3>
+
+          <p>
+            You haven't added any products to your cart yet.
+          </p>
+
+          <a href="/" class="shop-button">
+            Start Shopping
+          </a>
+
+        </div>
+
+
+      <!-- CART HAS ITEMS -->
+
+      <% } else { %>
+
+
+        <div class="cart-layout">
+
+
+          <!-- CART ITEMS -->
+
+          <div class="cart-items">
+
+            <% orderItems.forEach(item=> { %>
+
+              <div class="cart-item">
+
+
+                <!-- IMAGE -->
+
+                <div class="cart-item-image">
+
+                  <img
+                    src="<%= item.Product.imageURL %>"
+                    alt="<%= item.Product.productName %>"
+                  />
+
+                </div>
+
+
+                <!-- PRODUCT -->
+
+                <div class="cart-item-content">
+
+                  <span class="category">
+                    Product
+                  </span>
+
+
+                  <h3>
+                    <%= item.Product.productName %>
+                  </h3>
+
+
+                  <p class="item-price">
+                    <%= formatRp(item.priceAtPurchase) %>
+                  </p>
+
+
+                  <!-- QUANTITY + REMOVE -->
+
+                  <div class="cart-item-footer">
+
+
+                    <div class="quantity-section">
+
+                      <span class="quantity-label">
+                        Quantity
+                      </span>
+
+
+                      <div class="quantity-control">
+
+                        <% if (item.quantity > 1) { %>
+
+                          <form
+                            action="/orders/cart/update/<%= item.Product.id %>"
+                            method="POST"
+                          >
+
+                            <input
+                              type="hidden"
+                              name="quantity"
+                              value="<%= item.quantity - 1 %>"
+                            />
+
+                            <button
+                              type="submit"
+                              class="quantity-button"
+                            >
+                              −
+                            </button>
+
+                          </form>
+
+                        <% } else { %>
+
+                          <button
+                            type="button"
+                            class="quantity-button disabled"
+                            disabled
+                          >
+                            −
+                          </button>
+
+                        <% } %>
+
+
+                        <span class="quantity">
+                          <%= item.quantity %>
+                        </span>
+
+
+                        <form
+                          action="/orders/cart/update/<%= item.Product.id %>"
+                          method="POST"
+                        >
+
+                          <input
+                            type="hidden"
+                            name="quantity"
+                            value="<%= item.quantity + 1 %>"
+                          />
+
+                          <button
+                            type="submit"
+                            class="quantity-button"
+                          >
+                            +
+                          </button>
+
+                        </form>
+
+                      </div>
+
+                    </div>
+
+
+                    <!-- REMOVE -->
+
+                    <form
+                      action="/orders/cart/remove/<%= item.Product.id %>"
+                      method="POST"
+                    >
+
+                      <button
+                        type="submit"
+                        class="remove-button"
+                      >
+                        Remove
+                      </button>
+
+                    </form>
+
+                  </div>
+
+
+                  <!-- ERROR -->
+
+                  <% if (errors && productId==item.Product.id) { %>
+
+                    <p class="error-message">
+                      <%= errors %>
+                    </p>
+
+                  <% } %>
+
+                </div>
+
+              </div>
+
+            <% }) %>
+
+          </div>
+
+
+          <!-- ORDER SUMMARY -->
+
+          <aside class="summary-card">
+
+            <h3>
+              Order Summary
+            </h3>
+
+
+            <div class="summary-row">
+
+              <span>
+                Products
+              </span>
+
+              <span>
+                <%= orderItems.length %>
+              </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+              <span>
+                Total Ongkir
+              </span>
+
+              <span>
+                <%= formatRp(order.totalOngkir) %>
+              </span>
+
+            </div>
+
+
+            <div class="summary-divider"></div>
+
+
+            <div class="summary-row total-row">
+
+              <span>
+                Total
+              </span>
+
+              <strong>
+                <%= formatRp(order.totalAmount) %>
+              </strong>
+
+            </div>
+
+
+            <form action="/checkout" method="GET">
+
+              <button
+                type="submit"
+                class="checkout-button"
+              >
+                Checkout
+              </button>
+
+            </form>
+
+          </aside>
+
+
+        </div>
+
+
+      <% } %>
+
+    </main>
+
+  </div>
+
 </body>
 
 </html>

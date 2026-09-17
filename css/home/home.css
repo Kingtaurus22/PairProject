@@ -121,24 +121,21 @@ a {
   color: white;
 }
 
-.login-button {
-  padding: 11px 22px;
-
-  border: 1.5px solid #0879d9;
+.logout-button {
+  padding: 10px 16px;
+  border: none;
   border-radius: 12px;
-
-  color: #0879d9;
-  background: white;
-
+  background: #fff1f1;
+  color: #d64545;
   font-size: 14px;
   font-weight: 700;
-
+  cursor: pointer;
   transition: 0.2s;
 }
 
-.login-button:hover {
+.logout-button:hover {
+  background: #d64545;
   color: white;
-  background: #0879d9;
 }
 
 .filter-card {
