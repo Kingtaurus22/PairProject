@@ -158,6 +158,7 @@ class Controller {
 
     static async getEditProfile(req, res) {
         try {
+            const { errors } = req.query
             const user = await User.findByPk(req.session.userId, {
                 include: {
                     model: Profile,
@@ -168,6 +169,7 @@ class Controller {
                 title: "Edit Profile",
                 user,
                 profile: user.Profile,
+                errors
             });
         } catch (error) {
             console.log(error);
@@ -209,23 +211,32 @@ class Controller {
 
             res.redirect("/profile");
         } catch (error) {
-            console.log(error);
-            res.send(error);
+            if (error.name === "SequelizeValidationError") {
+                let errors = error.errors.map(el => el.message)
+                res.redirect(`/profile/edit?errors=${errors}`);
+            } else {
+                res.send(error)
+            }
         }
     }
 
     static async productDetail(req, res) {
         try {
             const { id } = req.params;
+            const { message } = req.query;
 
             const product = await Product.findByPk(id, {
                 include: [Category, User],
             });
 
+            const user = await User.findByPk(req.session.userId);
+
             res.render("productDetail", {
                 title: product.productName,
                 product,
-                formatRp
+                formatRp,
+                username: user.username,
+                message
             });
         } catch (error) {
             console.log(error);
@@ -297,7 +308,7 @@ class Controller {
 
             await order.save();
 
-            res.send(`Product ${product.productName} berhasil ditambahkan ke cart`);
+            res.redirect(`/products/${product.id}?message=Product ${product.productName} berhasil ditambahkan ke cart`);
         } catch (error) {
             console.log(error);
             res.send(error);
@@ -547,7 +558,7 @@ class Controller {
             }
 
             order.paymentMethod = paymentMethod;
-            order.status = "Pending";
+            order.status = "Paid";
 
             await order.save();
 
@@ -577,10 +588,13 @@ class Controller {
                 order: [["createdAt", "DESC"]],
             });
 
+            const user = await User.findByPk(req.session.userId);
+
             res.render("orders", {
                 title: "My Orders",
                 orders,
-                formatRp
+                formatRp,
+                username: user.username
             });
         } catch (error) {
             console.log(error);

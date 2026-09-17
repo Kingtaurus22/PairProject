@@ -2,75 +2,302 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    <%= title %>
+    <%= title %> - Vendra
   </title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="/orders/style.css">
 </head>
 
 <body>
-  <a href="/">← Back to Products</a>
 
-  <h1>My Orders</h1>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
 
-  <% if (orders.length===0) { %>
+      <div class="d-flex align-items-center">
 
-    <p>Belum ada order.</p>
-
-    <% } else { %>
-
-      <% orders.forEach(order=> { %>
-
-        <div>
-          <h2>
-            Order #<%= order.id %>
-          </h2>
-
-          <p>
-            Status:
-            <%= order.status %>
-          </p>
-
-          <p>
-            totalOngkir:
-            <%= order.totalOngkir %>
-          </p>
-
-          <p>
-            Payment:
-            <%= order.paymentMethod %>
-          </p>
-
-          <p>
-            Total:
-            <%= formatRp(order.totalAmount) %>
-          </p>
-
-          <a href="/orders/<%= order.id %>/invoice">Download Invoice</a>
-
-          <h3>Products</h3>
-
-          <% order.Products.forEach(product=> { %>
-
-            <p>
-              <%= product.productName %>
-                -
-                Quantity:
-                <%= product.OrderItem.quantity %>
-            </p>
-
-            <% }) %>
-
-              <hr />
-
+        <div class="brand-box me-3">
+          V
         </div>
 
-        <% }) %>
+        <div>
+          <div class="brand-name">
+            Vendra
+          </div>
 
-          <% } %>
+          <div class="brand-subtitle">
+            Marketplace
+          </div>
+        </div>
+
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+
+        <a href="/cart" class="nav-link">
+          Cart
+        </a>
+
+        <a href="/orders" class="nav-link">
+          My Orders
+        </a>
+
+        <a href="/profile" class="text-decoration-none ms-2">
+          <span class="user-button">
+            <%= username %>
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+  <main class="container pb-5">
+
+    <!-- Back -->
+    <div class="mb-4">
+      <a href="/" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to Products
+      </a>
+    </div>
+
+
+    <!-- Page Header -->
+    <div class="page-header">
+
+      <div class="page-label">
+        Vendra Marketplace
+      </div>
+
+      <h1 class="page-title">
+        My Orders
+      </h1>
+
+      <p class="page-description">
+        Track your shopping history and order details.
+      </p>
+
+    </div>
+
+
+    <% if (orders.length===0) { %>
+
+      <!-- Empty -->
+      <div class="empty-card">
+
+        <div class="empty-icon">
+          <i class="bi bi-bag-x"></i>
+        </div>
+
+        <h2 class="empty-title">
+          No orders yet
+        </h2>
+
+        <p class="empty-description">
+          You haven't placed any orders yet.
+        </p>
+
+        <a href="/" class="shop-btn">
+          <i class="bi bi-shop me-2"></i>
+          Start Shopping
+        </a>
+
+      </div>
+
+      <% } else { %>
+
+        <% orders.forEach(order=> { %>
+
+          <div class="order-card">
+
+            <!-- Order Header -->
+            <div class="order-header">
+
+              <div>
+                <h2 class="order-number">
+                  Order #<%= order.id %>
+                </h2>
+
+                <div class="order-date">
+                  <i class="bi bi-calendar3 me-1"></i>
+                  <%= new Date(order.createdAt).toLocaleDateString("id-ID") %>
+                </div>
+              </div>
+
+
+              <% if (order.status==="Cart" ) { %>
+
+                <span class="status-badge status-cart">
+                  Cart
+                </span>
+
+                <% } else if (order.status==="Pending" ) { %>
+
+                  <span class="status-badge status-pending">
+                    Pending
+                  </span>
+
+                  <% } else if (order.status==="Paid" ) { %>
+
+                    <span class="status-badge status-paid">
+                      Paid
+                    </span>
+
+                    <% } else { %>
+
+                      <span class="status-badge status-pending">
+                        <%= order.status %>
+                      </span>
+
+                      <% } %>
+
+            </div>
+
+
+            <!-- Order Information -->
+            <div class="row g-3">
+
+              <div class="col-md-4">
+
+                <div class="info-item">
+
+                  <div class="info-label">
+                    <i class="bi bi-truck info-icon"></i>
+                    Shipping
+                  </div>
+
+                  <div class="info-value">
+                    <%= formatRp(order.totalOngkir) %>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="col-md-4">
+
+                <div class="info-item">
+
+                  <div class="info-label">
+                    <i class="bi bi-credit-card info-icon"></i>
+                    Payment Method
+                  </div>
+
+                  <div class="info-value">
+                    <%= order.paymentMethod || "Not selected" %>
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="col-md-4">
+
+                <div class="info-item">
+
+                  <div class="info-label">
+                    <i class="bi bi-box-seam info-icon"></i>
+                    Items
+                  </div>
+
+                  <div class="info-value">
+                    <%= order.Products.length %> Product
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Total -->
+            <div class="total-box">
+
+              <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                  <div class="total-label">
+                    Total Amount
+                  </div>
+
+                  <div class="total-price">
+                    <%= formatRp(order.totalAmount) %>
+                  </div>
+                </div>
+
+                <a href="/orders/<%= order.id %>/invoice" class="invoice-btn">
+                  <i class="bi bi-file-earmark-pdf"></i>
+                  Download Invoice
+                </a>
+
+              </div>
+
+            </div>
+
+
+            <!-- Products -->
+            <div class="mt-4">
+
+              <div class="products-title">
+                <i class="bi bi-bag me-2"></i>
+                Products
+              </div>
+
+
+              <% order.Products.forEach(product=> { %>
+
+                <div class="product-item">
+
+                  <div class="product-icon">
+                    <i class="bi bi-box-seam"></i>
+                  </div>
+
+                  <div class="flex-grow-1">
+
+                    <div class="product-name">
+                      <%= product.productName %>
+                    </div>
+
+                    <div class="product-quantity">
+                      Quantity:
+                      <%= product.OrderItem.quantity %>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <% }) %>
+
+            </div>
+
+          </div>
+
+          <% }) %>
+
+            <% } %>
+
+  </main>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+  </script>
 
 </body>
 

@@ -29,15 +29,16 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     paymentMethod: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
-        notNull: {
-          msg: 'Please select a payment method'
+        paymentMethodRequired(value) {
+          if (this.status !== "Cart" && !value) {
+            throw new Error(
+              "Please select a payment method"
+            );
+          }
         },
-        notEmpty: {
-          msg: 'Please select a payment method'
-        }
-      }
+      },
     },
     CustomerId: DataTypes.INTEGER,
     paidAt: DataTypes.DATE

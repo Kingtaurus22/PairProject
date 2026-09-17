@@ -1,227 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8" />
 
-    <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-      rel="stylesheet"
-      href="/profile/profile.css"
-    />
-  </head>
+  <title>
+    <%= title %>
+  </title>
 
-  <body>
+  <link rel="stylesheet" href="/profile/profile.css" />
+</head>
 
-    <div class="page-container">
+<body>
 
-      <!-- NAVBAR -->
-      <header class="navbar">
+  <div class="page-container">
 
-        <div class="brand">
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-          <div class="brand-logo">
-            V
-          </div>
+      <div class="brand">
 
-          <div class="brand-info">
-            <h1>Vendra</h1>
-            <span>Marketplace</span>
-          </div>
+        <div class="brand-logo">
+          V
+        </div>
+
+        <div class="brand-info">
+          <h1>Vendra</h1>
+          <span>Marketplace</span>
+        </div>
+
+      </div>
+
+
+      <div class="navbar-actions">
+
+        <a href="/" class="nav-link">
+          Products
+        </a>
+
+        <a href="/cart" class="nav-link">
+          Cart
+        </a>
+
+        <a href="/orders" class="nav-link">
+          My Orders
+        </a>
+
+        <a href="/profile" class="profile-button">
+          <%= user.username %>
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <!-- PROFILE -->
+    <main class="profile-section">
+
+      <div class="section-label">
+        VENDRA ACCOUNT
+      </div>
+
+
+      <div class="profile-header">
+
+        <div>
+
+          <h2>
+            My Profile
+          </h2>
+
+          <p>
+            Manage your account information
+          </p>
 
         </div>
 
+      </div>
 
-        <div class="navbar-actions">
 
-          <a href="/" class="nav-link">
-            Products
-          </a>
+      <!-- PROFILE CARD -->
+      <div class="profile-card">
 
-          <a href="/cart" class="nav-link">
-            Cart
-          </a>
+        <!-- EDIT BUTTON -->
+        <% if (profile) { %>
 
-          <a href="/orders" class="nav-link">
-            My Orders
-          </a>
+          <div class="edit-profile-wrapper">
 
-          <a href="/profile" class="profile-button">
-            <%= user.username %>
-          </a>
-
-        </div>
-
-      </header>
-
-
-      <!-- PROFILE -->
-      <main class="profile-section">
-
-        <div class="section-label">
-          VENDRA ACCOUNT
-        </div>
-
-
-        <div class="profile-header">
-
-          <div>
-
-            <h2>
-              My Profile
-            </h2>
-
-            <p>
-              Manage your account information
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <!-- PROFILE CARD -->
-        <div class="profile-card">
-
-          <!-- EDIT BUTTON -->
-          <% if (profile) { %>
-
-            <div class="edit-profile-wrapper">
-
-              <a
-                href="/profile/edit"
-                class="edit-button"
-              >
-                Edit Profile
-              </a>
-
-            </div>
-
-          <% } %>
-
-
-          <!-- PROFILE HEADER -->
-          <div class="profile-card-header">
-
-            <div class="profile-icon">
-              <%= user.username.charAt(0).toUpperCase() %>
-            </div>
-
-            <div>
-
-              <h3>
-                <%= user.username %>
-              </h3>
-
-              <span>
-                <%= user.role %>
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="profile-divider"></div>
-
-
-          <!-- PROFILE INFORMATION -->
-          <div class="profile-info">
-
-            <!-- USERNAME -->
-            <div class="info-item">
-
-              <span class="info-label">
-                Username
-              </span>
-
-              <p>
-                <%= user.username %>
-              </p>
-
-            </div>
-
-
-            <!-- EMAIL -->
-            <div class="info-item">
-
-              <span class="info-label">
-                Email
-              </span>
-
-              <p>
-                <%= user.email %>
-              </p>
-
-            </div>
-
-
-            <!-- FULL NAME -->
-            <div class="info-item">
-
-              <span class="info-label">
-                Full Name
-              </span>
-
-              <p>
-                <%= profile ? profile.fullName || "-" : "-" %>
-              </p>
-
-            </div>
-
-
-            <!-- PHONE NUMBER -->
-            <div class="info-item">
-
-              <span class="info-label">
-                Phone Number
-              </span>
-
-              <p>
-                <%= profile ? profile.phoneNumber || "-" : "-" %>
-              </p>
-
-            </div>
-
-
-            <!-- ADDRESS -->
-            <div class="info-item address-item">
-
-              <span class="info-label">
-                Address
-              </span>
-
-              <p>
-                <%= profile ? profile.address || "-" : "-" %>
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <!-- ACTION -->
-          <div class="profile-actions">
-
-            <a
-              href="/"
-              class="back-button"
-            >
-              ← Back to Products
+            <a href="/profile/edit" class="edit-button">
+              Edit Profile
             </a>
 
           </div>
 
-        </div>
+          <% } else { %>
 
-      </main>
+            <div class="edit-profile-wrapper">
+              <a href="/profile/edit" class="edit-button">Complete Profile</a>
+            </div>
 
-    </div>
+            <% } %>
 
-  </body>
+
+              <!-- PROFILE HEADER -->
+              <div class="profile-card-header">
+
+                <div class="profile-icon">
+                  <%= user.username.charAt(0).toUpperCase() %>
+                </div>
+
+                <div>
+
+                  <h3>
+                    <%= user.username %>
+                  </h3>
+
+                  <span>
+                    <%= user.role %>
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div class="profile-divider"></div>
+
+
+              <!-- PROFILE INFORMATION -->
+              <div class="profile-info">
+
+                <!-- USERNAME -->
+                <div class="info-item">
+
+                  <span class="info-label">
+                    Username
+                  </span>
+
+                  <p>
+                    <%= user.username %>
+                  </p>
+
+                </div>
+
+
+                <!-- EMAIL -->
+                <div class="info-item">
+
+                  <span class="info-label">
+                    Email
+                  </span>
+
+                  <p>
+                    <%= user.email %>
+                  </p>
+
+                </div>
+
+
+                <!-- FULL NAME -->
+                <div class="info-item">
+
+                  <span class="info-label">
+                    Full Name
+                  </span>
+
+                  <p>
+                    <%= profile ? profile.fullName || "-" : "-" %>
+                  </p>
+
+                </div>
+
+
+                <!-- PHONE NUMBER -->
+                <div class="info-item">
+
+                  <span class="info-label">
+                    Phone Number
+                  </span>
+
+                  <p>
+                    <%= profile ? profile.phoneNumber || "-" : "-" %>
+                  </p>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+                <div class="info-item address-item">
+
+                  <span class="info-label">
+                    Address
+                  </span>
+
+                  <p>
+                    <%= profile ? profile.address || "-" : "-" %>
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <!-- ACTION -->
+              <div class="profile-actions">
+
+                <a href="/" class="back-button">
+                  ← Back to Products
+                </a>
+
+              </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+
 </html>
