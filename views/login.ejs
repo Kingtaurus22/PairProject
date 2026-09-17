@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/auth/style.css" />
+</head>
+
+<body>
+
+    <div class="background-decoration">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+
+        <i class="bi bi-bag-fill floating-icon icon-1"></i>
+        <i class="bi bi-cart-fill floating-icon icon-2"></i>
+        <i class="bi bi-percent floating-icon icon-3"></i>
+        <i class="bi bi-heart-fill floating-icon icon-4"></i>
+        <i class="bi bi-star-fill floating-icon icon-5"></i>
+        <i class="bi bi-gift-fill floating-icon icon-6"></i>
+
+        <span class="background-text text-1">
+            Good Products<br />
+            Better Days
+        </span>
+
+        <span class="background-text text-2">
+            Shop Your<br />
+            Happiness
+        </span>
+    </div>
+
+    <!-- AUTH CONTAINER -->
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="row g-0 h-100">
+
+                <!-- LEFT PANEL -->
+                <div class="col-lg-5">
+                    <section class="welcome-panel">
+                        <div class="welcome-content">
+
+                            <!-- LOGO -->
+                            <div class="brand-logo">
+                                <i class="bi bi-bag-heart-fill"></i>
+                            </div>
+
+                            <span class="welcome-small">
+                                Welcome to
+                            </span>
+
+                            <h1>Vendra</h1>
+
+                            <p>
+                                Your one-stop shop for quality products,
+                                trusted sellers, and a better shopping experience.
+                            </p>
+
+                            <!-- SHOPPING ILLUSTRATION -->
+                            <div class="shopping-illustration">
+                                <div class="illustration-circle"></div>
+
+                                <div class="shopping-bag">
+                                    <div class="bag-handle"></div>
+
+                                    <i class="bi bi-bag-heart"></i>
+                                </div>
+
+                                <div class="gift-box">
+                                    <div class="gift-ribbon"></div>
+                                </div>
+
+                                <div class="leaf leaf-1"></div>
+                                <div class="leaf leaf-2"></div>
+                                <div class="leaf leaf-3"></div>
+                            </div>
+
+                            <!-- FEATURES -->
+                            <div class="row features">
+                                <div class="col-4">
+                                    <div class="feature">
+                                        <i class="bi bi-truck"></i>
+
+                                        <span>
+                                            Fast &
+                                            <br />
+                                            Reliable
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="feature">
+                                        <i class="bi bi-shield-check"></i>
+
+                                        <span>
+                                            Secure
+                                            <br />
+                                            Payment
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="feature">
+                                        <i class="bi bi-heart"></i>
+
+                                        <span>
+                                            Trusted
+                                            <br />
+                                            Sellers
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="welcome-footer">
+                                <span></span>
+                                <p>Shop Smart, Live Better</p>
+                                <span></span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- RIGHT PANEL -->
+                <div class="col-lg-7">
+                    <section class="form-panel">
+                        <div class="form-wrapper">
+
+                            <!-- HEADER -->
+                            <div class="form-header">
+                                <div>
+                                    <span class="form-badge">
+                                        Welcome back
+                                    </span>
+
+                                    <h2>Sign In</h2>
+
+                                    <p>
+                                        Sign in to continue to your account
+                                    </p>
+                                </div>
+
+                                <div class="register-top">
+                                    <span>New here?</span>
+
+                                    <a href="/register">
+                                        Register
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- ERROR -->
+                            <% if (typeof message !=="undefined" && message) { %>
+                                <div class="alert alert-danger">
+                                    <i class="bi bi-exclamation-circle me-2"></i>
+                                    <%= message %>
+                                </div>
+                                <% } %>
+
+                                    <!-- LOGIN FORM -->
+                                    <form action="/login" method="post">
+
+                                        <!-- EMAIL -->
+                                        <div class="mb-4">
+                                            <label for="email" class="form-label">
+                                                Email Address
+                                            </label>
+
+                                            <div class="input-wrapper">
+                                                <i class="bi bi-envelope"></i>
+
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    placeholder="Enter your email" />
+                                            </div>
+                                        </div>
+
+                                        <!-- PASSWORD -->
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <label for="password" class="form-label">
+                                                    Password
+                                                </label>
+                                            </div>
+
+                                            <div class="input-wrapper">
+                                                <i class="bi bi-lock"></i>
+
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" placeholder="Enter your password" />
+
+                                                <button type="button" class="password-toggle" id="togglePassword">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- BUTTON -->
+                                        <button type="submit" class="btn btn-signin w-100 mt-3">
+                                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                                            Sign In
+                                        </button>
+                                    </form>
+
+                                    <!-- LINE -->
+                                    <div class="divider">
+                                        <span></span>
+                                        <p>OR</p>
+                                        <span></span>
+                                    </div>
+
+                                    <!-- REGISTER -->
+                                    <div class="register-section">
+                                        <p>
+                                            Don't have an account?
+                                        </p>
+
+                                        <a href="/register" class="btn btn-register w-100">
+                                            <i class="bi bi-person-plus me-2"></i>
+                                            Create Account
+                                        </a>
+                                    </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const password =
+            document.getElementById("password");
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+                const type =
+                    password.getAttribute("type") ===
+                        "password"
+                        ? "text"
+                        : "password";
+
+                password.setAttribute("type", type);
+
+                togglePassword.innerHTML =
+                    type === "password"
+                        ? '<i class="bi bi-eye"></i>'
+                        : '<i class="bi bi-eye-slash"></i>';
+            }
+        );
+    </script>
+</body>
+
+</html>

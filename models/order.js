@@ -20,19 +20,16 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Order.init(
-    {
-      totalOngkir: DataTypes.INTEGER,
-      totalAmount: DataTypes.INTEGER,
-      status: DataTypes.STRING,
-      paymentMethod: DataTypes.STRING,
-      CustomerId: DataTypes.INTEGER,
-      paidAt: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: "Order",
-    },
-  );
+  Order.init({
+    totalOngkir: DataTypes.INTEGER,
+    totalAmount: DataTypes.INTEGER,
+    status: DataTypes.STRING,
+    paymentMethod: DataTypes.STRING,
+    CustomerId: DataTypes.INTEGER,
+    paidAt: DataTypes.DATE
+  }, {
+    sequelize,
+    modelName: 'Order',
+  });
   return Order;
 };

@@ -10,7 +10,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    await queryInterface.addColumn('Orders', 'paidAt', Sequelize.STRING)
+    await queryInterface.addColumn('Orders', 'paidAt', Sequelize.DATE)
   },
 
   async down(queryInterface, Sequelize) {
