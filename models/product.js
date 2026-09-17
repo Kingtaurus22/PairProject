@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model, Op } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**
@@ -25,17 +23,55 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "OrderId",
       });
     }
+    static getProducts(search, category, sort) {
+      let order = [["createdAt", "DESC"]];
+
+      if (sort === "price_asc") {
+        order = [["price", "ASC"]];
+      }
+
+      if (sort === "price_desc") {
+        order = [["price", "DESC"]];
+      }
+
+      return this.findAll({
+        include: {
+          model: this.sequelize.models.Category,
+        },
+
+        where: {
+          ...(search
+            ? {
+                productName: {
+                  [Op.iLike]: `%${search}%`,
+                },
+              }
+            : {}),
+
+          ...(category
+            ? {
+                CategoryId: category,
+              }
+            : {}),
+        },
+
+        order,
+      });
+    }
   }
-  Product.init({
-    productName: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER,
-    imageURL: DataTypes.STRING,
-    CategoryId: DataTypes.INTEGER,
-    SellerId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Product',
-  });
+  Product.init(
+    {
+      productName: DataTypes.STRING,
+      price: DataTypes.INTEGER,
+      stock: DataTypes.INTEGER,
+      imageURL: DataTypes.STRING,
+      CategoryId: DataTypes.INTEGER,
+      SellerId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "Product",
+    },
+  );
   return Product;
 };
