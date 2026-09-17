@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8" />
 
-    <title><%= title %></title>
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <a href="/">← Back to Products</a>
+  <title>
+    <%= title %>
+  </title>
+</head>
 
-    <h1>My Orders</h1>
+<body>
+  <a href="/">← Back to Products</a>
 
-    <% if (orders.length === 0) { %>
+  <h1>My Orders</h1>
 
-      <p>Belum ada order.</p>
+  <% if (orders.length===0) { %>
+
+    <p>Belum ada order.</p>
 
     <% } else { %>
 
-      <% orders.forEach(order => { %>
+      <% orders.forEach(order=> { %>
 
         <div>
           <h2>
@@ -35,37 +35,43 @@
           </p>
 
           <p>
+            totalOngkir:
+            <%= order.totalOngkir %>
+          </p>
+
+          <p>
             Payment:
             <%= order.paymentMethod %>
           </p>
 
           <p>
             Total:
-            Rp <%= order.totalAmount %>
+            <%= formatRp(order.totalAmount) %>
           </p>
 
           <a href="/orders/<%= order.id %>/invoice">Download Invoice</a>
 
           <h3>Products</h3>
 
-          <% order.Products.forEach(product => { %>
+          <% order.Products.forEach(product=> { %>
 
             <p>
               <%= product.productName %>
-              -
-              Quantity:
-              <%= product.OrderItem.quantity %>
+                -
+                Quantity:
+                <%= product.OrderItem.quantity %>
             </p>
 
-          <% }) %>
+            <% }) %>
 
-          <hr />
+              <hr />
 
         </div>
 
-      <% }) %>
+        <% }) %>
 
-    <% } %>
+          <% } %>
 
-  </body>
+</body>
+
 </html>

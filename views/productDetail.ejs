@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= title %></title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <a href="/">← Back to Products</a>
+  <title>
+    <%= title %>
+  </title>
+</head>
 
-    <h1><%= product.productName %></h1>
+<body>
+  <a href="/">← Back to Products</a>
 
-    <p>Category: <%= product.Category.categoryName %></p>
+  <h1>
+    <%= product.productName %>
+  </h1>
 
-    <p>Seller: <%= product.User.username %></p>
+  <p>Category: <%= product.Category.categoryName %>
+  </p>
 
-    <p>Price: Rp <%= product.price %></p>
+  <p>Seller: <%= product.User.username %>
+  </p>
 
-    <p>Stock: <%= product.stock %></p>
+  <p>Price: <%= formatRp(product.price) %>
+  </p>
 
-    <p>Product ID: <%= product.id %></p>
-    <form action="/orders/cart/add/<%= product.id %>" method="POST">
-      <button type="submit">Add to Cart</button>
-    </form>
-  </body>
+  <p>Stock: <%= product.stock %>
+  </p>
+
+  <p>Product ID: <%= product.id %>
+  </p>
+  <form action="/orders/cart/add/<%= product.id %>" method="POST">
+    <button type="submit">Add to Cart</button>
+  </form>
+</body>
+
 </html>

@@ -1,171 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8" />
 
-    <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="/home/home.css" />
-  </head>
+  <title>
+    <%= title %>
+  </title>
 
-  <body>
+  <link rel="stylesheet" href="/home/home.css" />
+</head>
 
-    <div class="page-container">
+<body>
 
-      <!-- NAVBAR -->
-        <header class="navbar">
+  <div class="page-container">
 
-        <div class="brand">
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-            <div class="brand-logo">
-            V
-            </div>
+      <div class="brand">
 
-            <div class="brand-info">
-            <h1>Vendra</h1>
-            <span>Marketplace</span>
-            </div>
-
+        <div class="brand-logo">
+          V
         </div>
 
-
-        <div class="navbar-actions">
-
-            <a href="/cart" class="nav-link">
-            Cart
-            </a>
-
-            <a href="/orders" class="nav-link">
-            My Orders
-            </a>
-
-            <a href="/profile" class="profile-button">
-            <%= username %>
-            </a>
-
+        <div class="brand-info">
+          <h1>Vendra</h1>
+          <span>Marketplace</span>
         </div>
 
-        </header>
+      </div>
 
 
-      <!-- SEARCH & FILTER -->
-      <form action="/" method="GET" class="filter-card">
+      <div class="navbar-actions">
 
-        <div class="search-box">
+        <a href="/cart" class="nav-link">
+          Cart
+        </a>
 
-          <span>⌕</span>
+        <a href="/orders" class="nav-link">
+          My Orders
+        </a>
 
-          <input
-            type="text"
-            name="search"
-            placeholder="Search product..."
-            value="<%= search || '' %>"
-          />
+        <a href="/profile" class="profile-button">
+          <%= username %>
+        </a>
 
-        </div>
+      </div>
+
+    </header>
 
 
-        <select
-          name="category"
-          onchange="this.form.submit()"
-        >
+    <!-- SEARCH & FILTER -->
+    <form action="/" method="GET" class="filter-card">
 
-          <option value="">
-            Semua Kategori
-          </option>
+      <div class="search-box">
 
-          <% categories.forEach(el => { %>
+        <span>⌕</span>
 
-            <option
-              value="<%= el.id %>"
-              <%= category && String(category) === String(el.id) ? "selected" : "" %>
+        <input type="text" name="search" placeholder="Search product..." value="<%= search || '' %>" />
+
+      </div>
+
+
+      <select name="category" onchange="this.form.submit()">
+
+        <option value="">
+          Semua Kategori
+        </option>
+
+        <% categories.forEach(el=> { %>
+
+          <option value="<%= el.id %>" <%=category && String(category)===String(el.id) ? "selected" : "" %>
             >
-              <%= el.categoryName %>
-            </option>
+            <%= el.categoryName %>
+          </option>
 
           <% }) %>
 
-        </select>
+      </select>
 
 
-        <select
-          name="sort"
-          onchange="this.form.submit()"
-        >
+      <select name="sort" onchange="this.form.submit()">
 
-          <option value="">
-            Newest
-          </option>
+        <option value="">
+          Newest
+        </option>
 
-          <option
-            value="price_asc"
-            <%= sort === "price_asc" ? "selected" : "" %>
+        <option value="price_asc" <%=sort==="price_asc" ? "selected" : "" %>
           >
-            Price: Low to High
-          </option>
+          Price: Low to High
+        </option>
 
-          <option
-            value="price_desc"
-            <%= sort === "price_desc" ? "selected" : "" %>
+        <option value="price_desc" <%=sort==="price_desc" ? "selected" : "" %>
           >
-            Price: High to Low
-          </option>
+          Price: High to Low
+        </option>
 
-        </select>
-
-
-        <button type="submit" class="search-button">
-          Search
-        </button>
-
-      </form>
+      </select>
 
 
-      <!-- PRODUCTS -->
+      <button type="submit" class="search-button">
+        Search
+      </button>
 
-      <section class="products-section">
+    </form>
 
-        <div class="section-header">
 
-          <div>
-            <span class="section-label">
-              VENDRA MARKETPLACE
-            </span>
+    <!-- PRODUCTS -->
 
-            <h2>
-              Products
-            </h2>
-          </div>
+    <section class="products-section">
 
-          <span class="product-count">
-            <%= products.length %> Products
+      <div class="section-header">
+
+        <div>
+          <span class="section-label">
+            VENDRA MARKETPLACE
           </span>
 
+          <h2>
+            Products
+          </h2>
         </div>
 
+        <span class="product-count">
+          <%= products.length %> Products
+        </span>
 
-        <% if (products.length === 0) { %>
+      </div>
 
-          <div class="empty">
 
-            <div class="empty-icon">
-              🛒
-            </div>
+      <% if (products.length===0) { %>
 
-            <h3>
-              Product tidak ditemukan
-            </h3>
+        <div class="empty">
 
-            <p>
-              Coba gunakan kata kunci atau kategori lain.
-            </p>
-
+          <div class="empty-icon">
+            🛒
           </div>
+
+          <h3>
+            Product tidak ditemukan
+          </h3>
+
+          <p>
+            Coba gunakan kata kunci atau kategori lain.
+          </p>
+
+        </div>
 
 
         <% } else { %>
@@ -173,62 +156,57 @@
 
           <div class="product-grid">
 
-            <% products.forEach(product => { %>
+            <% products.forEach(product=> { %>
 
-                <div class="product-card">
+              <div class="product-card">
 
                 <div class="product-image">
-                    <img
-                    src="<%= product.imageURL %>"
-                    alt="<%= product.productName %>"
-                    />
+                  <img src="<%= product.imageURL %>" alt="<%= product.productName %>" />
                 </div>
 
                 <div class="product-content">
 
-                    <span class="category">
+                  <span class="category">
                     <%= product.Category.categoryName %>
-                    </span>
+                  </span>
 
-                    <h3>
+                  <h3>
                     <a href="/products/<%= product.id %>">
-                        <%= product.productName %>
+                      <%= product.productName %>
                     </a>
-                    </h3>
+                  </h3>
 
-                    <p class="price">
+                  <p class="price">
                     Rp <%= product.price.toLocaleString("id-ID") %>
-                    </p>
+                  </p>
 
-                    <div class="product-footer">
+                  <div class="product-footer">
 
                     <span>
-                        Stock: <%= product.stock %>
+                      Stock: <%= product.stock %>
                     </span>
 
-                    <a
-                        href="/products/<%= product.id %>"
-                        class="detail-button"
-                    >
-                        View →
+                    <a href="/products/<%= product.id %>" class="detail-button">
+                      View →
                     </a>
 
-                    </div>
+                  </div>
 
                 </div>
 
-                </div>
+              </div>
 
-            <% }) %>
+              <% }) %>
 
           </div>
 
 
-        <% } %>
+          <% } %>
 
-      </section>
+    </section>
 
-    </div>
+  </div>
 
-  </body>
+</body>
+
 </html>

@@ -165,115 +165,119 @@
                             </div>
 
                             <!-- ERROR -->
-                            <% if (typeof error !=="undefined" && error) { %>
-                                <div class="alert alert-danger">
-                                    <i class="bi bi-exclamation-circle me-2"></i>
-
-                                    <%= error %>
-                                </div>
-                                <% } %>
-
-                                    <!-- REGISTER FORM -->
-                                    <form action="/register" method="post">
-
-                                        <!-- USERNAME -->
-                                        <div class="mb-3">
-                                            <label for="username" class="form-label">
-                                                Username
-                                            </label>
-
-                                            <div class="input-wrapper">
-                                                <i class="bi bi-person"></i>
-
-                                                <input type="text" class="form-control" id="username" name="username"
-                                                    placeholder="Enter your username" autocomplete="username" />
-                                            </div>
+                            <% if (errors) { %>
+                                <% errors=errors.split(',') %>
+                                    <% errors.forEach(el=> { %>
+                                        <div class="alert alert-danger">
+                                            <i class="bi bi-exclamation-circle me-2"></i>
+                                            <%= el %>
                                         </div>
+                                        <% }) %>
+                                            <% } %>
 
-                                        <!-- EMAIL -->
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">
-                                                Email Address
-                                            </label>
+                                                <!-- REGISTER FORM -->
+                                                <form action="/register" method="post">
 
-                                            <div class="input-wrapper">
-                                                <i class="bi bi-envelope"></i>
+                                                    <!-- USERNAME -->
+                                                    <div class="mb-3">
+                                                        <label for="username" class="form-label">
+                                                            Username
+                                                        </label>
 
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    placeholder="Enter your email" />
-                                            </div>
-                                        </div>
+                                                        <div class="input-wrapper">
+                                                            <i class="bi bi-person"></i>
 
-                                        <!-- ROLE -->
-                                        <div class="mb-3">
-                                            <label for="role" class="form-label">
-                                                Role
-                                            </label>
+                                                            <input type="text" class="form-control" id="username"
+                                                                name="username" placeholder="Enter your username"
+                                                                autocomplete="username" />
+                                                        </div>
+                                                    </div>
 
-                                            <div class="input-wrapper">
-                                                <i class="bi bi-person-badge"></i>
+                                                    <!-- EMAIL -->
+                                                    <div class="mb-3">
+                                                        <label for="email" class="form-label">
+                                                            Email Address
+                                                        </label>
 
-                                                <select class="form-select" id="role" name="role">
-                                                    <option selected disabled>
-                                                        Select your role
-                                                    </option>
+                                                        <div class="input-wrapper">
+                                                            <i class="bi bi-envelope"></i>
 
-                                                    <option value="customer">
-                                                        Customer
-                                                    </option>
+                                                            <input type="email" class="form-control" id="email"
+                                                                name="email" placeholder="Enter your email" />
+                                                        </div>
+                                                    </div>
 
-                                                    <option value="seller">
-                                                        Seller
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                                    <!-- ROLE -->
+                                                    <div class="mb-3">
+                                                        <label for="role" class="form-label">
+                                                            Role
+                                                        </label>
 
-                                        <!-- PASSWORD -->
-                                        <div class="mb-3">
-                                            <label for="password" class="form-label">
-                                                Password
-                                            </label>
+                                                        <div class="input-wrapper">
+                                                            <i class="bi bi-person-badge"></i>
 
-                                            <div class="input-wrapper">
-                                                <i class="bi bi-lock"></i>
+                                                            <select class="form-select" id="role" name="role">
+                                                                <option selected disabled>
+                                                                    Select your role
+                                                                </option>
 
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" placeholder="Create your password" />
+                                                                <option value="customer">
+                                                                    Customer
+                                                                </option>
 
-                                                <button type="button" class="password-toggle" id="togglePassword">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                                                <option value="seller">
+                                                                    Seller
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-                                        <!-- BUTTON -->
-                                        <button type="submit" class="btn btn-signin w-100 mt-3">
-                                            <i class="bi bi-person-plus me-2"></i>
-                                            Create Account
-                                        </button>
+                                                    <!-- PASSWORD -->
+                                                    <div class="mb-3">
+                                                        <label for="password" class="form-label">
+                                                            Password
+                                                        </label>
 
-                                    </form>
+                                                        <div class="input-wrapper">
+                                                            <i class="bi bi-lock"></i>
 
-                                    <!-- LINE -->
-                                    <div class="divider">
-                                        <span></span>
-                                        <p>OR</p>
-                                        <span></span>
-                                    </div>
+                                                            <input type="password" class="form-control" id="password"
+                                                                name="password" placeholder="Create your password" />
 
-                                    <!-- LOGIN -->
-                                    <div class="register-section">
-                                        <p>
-                                            Already have an account?
-                                        </p>
+                                                            <button type="button" class="password-toggle"
+                                                                id="togglePassword">
+                                                                <i class="bi bi-eye"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
 
-                                        <a href="/login" class="btn btn-register w-100">
-                                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                                                    <!-- BUTTON -->
+                                                    <button type="submit" class="btn btn-signin w-100 mt-3">
+                                                        <i class="bi bi-person-plus me-2"></i>
+                                                        Create Account
+                                                    </button>
 
-                                            Sign In
-                                        </a>
-                                    </div>
+                                                </form>
+
+                                                <!-- LINE -->
+                                                <div class="divider">
+                                                    <span></span>
+                                                    <p>OR</p>
+                                                    <span></span>
+                                                </div>
+
+                                                <!-- LOGIN -->
+                                                <div class="register-section">
+                                                    <p>
+                                                        Already have an account?
+                                                    </p>
+
+                                                    <a href="/login" class="btn btn-register w-100">
+                                                        <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                                                        Sign In
+                                                    </a>
+                                                </div>
                         </div>
                     </section>
                 </div>

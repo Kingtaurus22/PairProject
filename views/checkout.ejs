@@ -1,93 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8" />
 
-    <title><%= title %></title>
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <a href="/cart">← Back to Cart</a>
+  <title>
+    <%= title %>
+  </title>
+</head>
 
-    <h1>Checkout</h1>
+<body>
+  <a href="/cart">← Back to Cart</a>
 
-    <h2>Order Summary</h2>
+  <h1>Checkout</h1>
 
-    <% orderItems.forEach(item => { %>
-      <div>
-        <h3>
-          <%= item.Product.productName %>
-        </h3>
+  <h2>Order Summary</h2>
 
-        <p>
-          Price:
-          Rp <%= item.priceAtPurchase %>
-        </p>
+  <% orderItems.forEach(item=> { %>
+    <div>
+      <h3>
+        <%= item.Product.productName %>
+      </h3>
 
-        <p>
-          Quantity:
-          <%= item.quantity %>
-        </p>
+      <p>
+        Price:
+        <%= formatRp(item.priceAtPurchase) %>
+      </p>
 
-        <p>
-          Subtotal:
-          Rp <%= item.priceAtPurchase * item.quantity %>
-        </p>
+      <p>
+        Quantity:
+        <%= item.quantity %>
+      </p>
 
-        <hr />
-      </div>
+      <p>
+        Subtotal:
+        <%= formatRp(item.subTotal) %>
+      </p>
+
+      <hr />
+    </div>
     <% }) %>
 
-    <h2>
-      Total:
-      Rp <%= order.totalAmount %>
-    </h2>
+      <h2>
+        Total:
+        <%= formatRp(order.totalAmount) %>
+      </h2>
 
-    <h2>Payment Method</h2>
+      <h2>Payment Method</h2>
 
-    <form action="/checkout" method="POST">
-      <label>
-        <input
-          type="radio"
-          name="paymentMethod"
-          value="Bank Transfer"
-          required
-        />
-        Bank Transfer
-      </label>
+      <% if (errors) { %>
+        <% errors=errors.split(',') %>
+          <% errors.forEach(el=> { %>
+            <p style="color: red;">
+              <%= el %>
+            </p>
+            <% }) %>
+              <% } %>
 
-      <br />
+                <form action="/checkout" method="POST">
+                  <label>
+                    <input type="radio" name="paymentMethod" value="Bank Transfer" />
+                    Bank Transfer
+                  </label>
 
-      <label>
-        <input
-          type="radio"
-          name="paymentMethod"
-          value="E-Wallet"
-        />
-        E-Wallet
-      </label>
+                  <br />
 
-      <br />
+                  <label>
+                    <input type="radio" name="paymentMethod" value="E-Wallet" />
+                    E-Wallet
+                  </label>
 
-      <label>
-        <input
-          type="radio"
-          name="paymentMethod"
-          value="Cash"
-        />
-        Cash
-      </label>
+                  <br />
 
-      <br /><br />
+                  <label>
+                    <input type="radio" name="paymentMethod" value="Cash" />
+                    Cash
+                  </label>
 
-      <button type="submit">
-        Place Order
-      </button>
-    </form>
-  </body>
+                  <br /><br />
+
+                  <button type="submit">
+                    Place Order
+                  </button>
+                </form>
+</body>
+
 </html>
