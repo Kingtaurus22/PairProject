@@ -25,6 +25,9 @@ class Controller {
                 const isValidPassword = bcrypt.compareSync(password, data.password)
 
                 if (isValidPassword) {
+                    req.session.userId = data.id
+                    req.session.role = data.role
+
                     return res.redirect('/')
                 } else {
                     return res.redirect('/login?message=Invalid password')
@@ -61,7 +64,13 @@ class Controller {
 
     static async logout(req, res) {
         try {
-
+            req.session.destroy(function (err) {
+                if (err) {
+                    res.send(err)
+                } else {
+                    res.redirect('/login')
+                }
+            })
         } catch (error) {
             res.send(error)
         }
