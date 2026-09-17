@@ -1,11 +1,12 @@
-const express = require('express');
-const Controller = require('./controllers/controller');
-const app = express()
-const port = 3000
+const express = require("express");
+const app = express();
+const port = 3000;
+const routes = require("./routes");
 const session = require('express-session')
 
-app.set('view engine', 'ejs')
-app.use(express.urlencoded({ extended: false }))
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static("css"));
 
 // SESSION
@@ -19,44 +20,8 @@ app.use(session({
     }
 }))
 
-// AUTH
-app.get('/login', Controller.getLogin)
-app.post('/login', Controller.postLogin)
-app.get('/register', Controller.getRegister)
-app.post('/register', Controller.postRegister)
-
-// MIDDLEWARE
-app.use((req, res, next) => {
-
-    if (!req.session.userId) {
-        res.redirect('/login?message=You must be login first!')
-    } else {
-        next();
-    }
-});
-
-// LOGOUT
-app.post('/logout', Controller.logout)
-
-const isCustomer = function (req, res, next) {
-
-    if (req.session.userId && req.session.role !== 'customer') {
-        res.redirect('/?message=You have no access!')
-    } else {
-        next()
-    }
-}
-
-// HOME
-app.get('/', (req, res) => {
-    res.send('ini home!')
-})
-
-app.get('/order', isCustomer, (req, res) => {
-    const { message } = req.query
-    res.send('ini order!')
-})
+app.use("/", routes);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+    console.log(`Server running on http://localhost:${port}`);
+});
