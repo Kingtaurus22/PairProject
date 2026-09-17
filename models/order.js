@@ -21,10 +21,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Order.init({
-    totalOngkir: DataTypes.INTEGER,
+    totalOngkir: {
+      type: DataTypes.INTEGER,
+      defaultValue: 5000,
+    },
     totalAmount: DataTypes.INTEGER,
     status: DataTypes.STRING,
-    paymentMethod: DataTypes.STRING,
+    paymentMethod: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please select a payment method'
+        },
+        notEmpty: {
+          msg: 'Please select a payment method'
+        }
+      }
+    },
     CustomerId: DataTypes.INTEGER,
     paidAt: DataTypes.DATE
   }, {

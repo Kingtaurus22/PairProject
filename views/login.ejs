@@ -163,7 +163,7 @@
                                 </div>
                             </div>
 
-                            <!-- ERROR -->
+                            <!-- ERROR LOGIN-->
                             <% if (typeof message !=="undefined" && message) { %>
                                 <div class="alert alert-danger">
                                     <i class="bi bi-exclamation-circle me-2"></i>
@@ -171,68 +171,82 @@
                                 </div>
                                 <% } %>
 
-                                    <!-- LOGIN FORM -->
-                                    <form action="/login" method="post">
+                                    <!-- ERROR VALIDATE -->
+                                    <% if (errors) { %>
+                                        <% errors=errors.split(',') %>
+                                            <% errors.forEach(el=> { %>
+                                                <div class="alert alert-danger">
+                                                    <i class="bi bi-exclamation-circle me-2"></i>
+                                                    <%= el %>
+                                                </div>
+                                                <% }) %>
+                                                    <% } %>
 
-                                        <!-- EMAIL -->
-                                        <div class="mb-4">
-                                            <label for="email" class="form-label">
-                                                Email Address
-                                            </label>
+                                                        <!-- LOGIN FORM -->
+                                                        <form action="/login" method="post">
 
-                                            <div class="input-wrapper">
-                                                <i class="bi bi-envelope"></i>
+                                                            <!-- EMAIL -->
+                                                            <div class="mb-4">
+                                                                <label for="email" class="form-label">
+                                                                    Email Address
+                                                                </label>
 
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    placeholder="Enter your email" />
-                                            </div>
-                                        </div>
+                                                                <div class="input-wrapper">
+                                                                    <i class="bi bi-envelope"></i>
 
-                                        <!-- PASSWORD -->
-                                        <div class="mb-3">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <label for="password" class="form-label">
-                                                    Password
-                                                </label>
-                                            </div>
+                                                                    <input type="email" class="form-control" id="email"
+                                                                        name="email" placeholder="Enter your email" />
+                                                                </div>
+                                                            </div>
 
-                                            <div class="input-wrapper">
-                                                <i class="bi bi-lock"></i>
+                                                            <!-- PASSWORD -->
+                                                            <div class="mb-3">
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center">
+                                                                    <label for="password" class="form-label">
+                                                                        Password
+                                                                    </label>
+                                                                </div>
 
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" placeholder="Enter your password" />
+                                                                <div class="input-wrapper">
+                                                                    <i class="bi bi-lock"></i>
 
-                                                <button type="button" class="password-toggle" id="togglePassword">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                                                    <input type="password" class="form-control"
+                                                                        id="password" name="password"
+                                                                        placeholder="Enter your password" />
 
-                                        <!-- BUTTON -->
-                                        <button type="submit" class="btn btn-signin w-100 mt-3">
-                                            <i class="bi bi-box-arrow-in-right me-2"></i>
-                                            Sign In
-                                        </button>
-                                    </form>
+                                                                    <button type="button" class="password-toggle"
+                                                                        id="togglePassword">
+                                                                        <i class="bi bi-eye"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
 
-                                    <!-- LINE -->
-                                    <div class="divider">
-                                        <span></span>
-                                        <p>OR</p>
-                                        <span></span>
-                                    </div>
+                                                            <!-- BUTTON -->
+                                                            <button type="submit" class="btn btn-signin w-100 mt-3">
+                                                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                                                                Sign In
+                                                            </button>
+                                                        </form>
 
-                                    <!-- REGISTER -->
-                                    <div class="register-section">
-                                        <p>
-                                            Don't have an account?
-                                        </p>
+                                                        <!-- LINE -->
+                                                        <div class="divider">
+                                                            <span></span>
+                                                            <p>OR</p>
+                                                            <span></span>
+                                                        </div>
 
-                                        <a href="/register" class="btn btn-register w-100">
-                                            <i class="bi bi-person-plus me-2"></i>
-                                            Create Account
-                                        </a>
-                                    </div>
+                                                        <!-- REGISTER -->
+                                                        <div class="register-section">
+                                                            <p>
+                                                                Don't have an account?
+                                                            </p>
+
+                                                            <a href="/register" class="btn btn-register w-100">
+                                                                <i class="bi bi-person-plus me-2"></i>
+                                                                Create Account
+                                                            </a>
+                                                        </div>
                         </div>
                     </section>
                 </div>

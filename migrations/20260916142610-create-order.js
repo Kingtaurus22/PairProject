@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       totalOngkir: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        defaultValue: 5000,
       },
       totalAmount: {
         type: Sequelize.INTEGER

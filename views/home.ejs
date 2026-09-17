@@ -1,65 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
+  <meta charset="UTF-8" />
 
-    <title><%= title %></title>
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <h1>Vendra</h1>
+  <title>
+    <%= title %>
+  </title>
+</head>
 
-    <form action="/" method="GET">
-  <input
-    type="text"
-    name="search"
-    placeholder="Search product..."
-    value="<%= search || '' %>"
-  />
+<body>
+  <h1>Vendra</h1>
 
-  <select name="sort" onchange="this.form.submit()">
-    <option value="">Newest</option>
+  <form action="/" method="GET">
+    <input type="text" name="search" placeholder="Search product..." value="<%= search || '' %>" />
 
-    <option
-      value="price_asc"
-      <%= sort === "price_asc" ? "selected" : "" %>
-    >
-      Price: Low to High
-    </option>
+    <select name="sort" onchange="this.form.submit()">
+      <option value="">Newest</option>
 
-    <option
-      value="price_desc"
-      <%= sort === "price_desc" ? "selected" : "" %>
-    >
-      Price: High to Low
-    </option>
-  </select>
+      <option value="price_asc" <%=sort==="price_asc" ? "selected" : "" %>
+        >
+        Price: Low to High
+      </option>
 
-  <button type="submit">Search</button>
-</form>
+      <option value="price_desc" <%=sort==="price_desc" ? "selected" : "" %>
+        >
+        Price: High to Low
+      </option>
+    </select>
 
-    <h2>Products</h2>
+    <button type="submit">Search</button>
+  </form>
 
-    <% if (products.length === 0) { %>
+  <h2>Products</h2>
 
-      <p>Product tidak ditemukan.</p>
+  <% if (products.length===0) { %>
+
+    <p>Product tidak ditemukan.</p>
 
     <% } else { %>
 
-      <% products.forEach(product => { %>
+      <% products.forEach(product=> { %>
 
         <div>
           <h3>
-            <a href="/products/<%= product.id %>"><%= product.productName %></a>
+            <a href="/products/<%= product.id %>">
+              <%= product.productName %>
+            </a>
           </h3>
 
           <p>
-            Price: Rp <%= product.price %>
+            Price: <%= formatRp(product.price) %>
           </p>
 
           <p>
@@ -74,8 +67,9 @@
 
         <hr />
 
-      <% }) %>
+        <% }) %>
 
-    <% } %>
-  </body>
+          <% } %>
+</body>
+
 </html>

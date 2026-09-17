@@ -8,14 +8,15 @@ const {
 } = require("../models");
 const { Op } = require("sequelize");
 const bcrypt = require('bcryptjs');
+const { formatRp } = require("../helpers/helper");
 // const easyinvoice = require("easyinvoice");
 
 class Controller {
     // Auth
     static async getLogin(req, res) {
         try {
-            const { message } = req.query
-            res.render('login', { message })
+            const { message, errors } = req.query
+            res.render('login', { message, errors })
         } catch (error) {
             res.send(error)
         }
@@ -24,6 +25,22 @@ class Controller {
     static async postLogin(req, res) {
         try {
             const { email, password } = req.body
+
+            let errors = [];
+
+            if (!email) {
+                errors.push("Email is required");
+            }
+
+            if (!password) {
+                errors.push("Password is required");
+            }
+
+            if (errors.length > 0) {
+                return res.redirect(
+                    `/login?errors=${errors}`
+                );
+            }
 
             let data = await User.findOne({
                 where: {
@@ -52,7 +69,8 @@ class Controller {
 
     static async getRegister(req, res) {
         try {
-            res.render('register')
+            const { errors } = req.query
+            res.render('register', { errors })
         } catch (error) {
             res.send(error)
         }
@@ -68,7 +86,12 @@ class Controller {
 
             res.redirect('/login');
         } catch (error) {
-            res.send(error)
+            if (error.name === "SequelizeValidationError") {
+                let errors = error.errors.map(el => el.message)
+                res.redirect(`/register?errors=${errors}`);
+            } else {
+                res.send(error)
+            }
         }
     }
 
@@ -119,6 +142,7 @@ class Controller {
                 products,
                 search,
                 sort,
+                formatRp
             });
         } catch (error) {
             console.log(error);
@@ -137,6 +161,7 @@ class Controller {
             res.render("productDetail", {
                 title: product.productName,
                 product,
+                formatRp
             });
         } catch (error) {
             console.log(error);
@@ -170,7 +195,7 @@ class Controller {
             if (!order) {
                 order = await Order.create({
                     CustomerId: customerId,
-                    totalOngkir: 0,
+                    totalOngkir: 5000,
                     totalAmount: 0,
                     status: "Cart",
                     paymentMethod: null,
@@ -203,8 +228,8 @@ class Controller {
             });
 
             order.totalAmount = orderItems.reduce((total, item) => {
-                return total + item.priceAtPurchase * item.quantity;
-            }, 0);
+                return total + (item.priceAtPurchase * item.quantity);
+            }, order.totalOngkir);
 
             await order.save();
 
@@ -217,6 +242,7 @@ class Controller {
 
     static async cart(req, res) {
         try {
+            const { errors, productId } = req.query
             const customerId = req.session.userId
 
             const order = await Order.findOne({
@@ -248,6 +274,9 @@ class Controller {
                 title: "Shopping Cart",
                 order,
                 orderItems,
+                formatRp,
+                errors,
+                productId
             });
         } catch (error) {
             console.log(error);
@@ -305,8 +334,8 @@ class Controller {
     }
 
     static async updateCart(req, res) {
+        const { productId } = req.params;
         try {
-            const { productId } = req.params;
             const { quantity } = req.body;
 
             const customerId = req.session.userId
@@ -335,10 +364,6 @@ class Controller {
 
             const product = await Product.findByPk(productId);
 
-            if (quantity < 1) {
-                return res.redirect("/cart");
-            }
-
             if (quantity > product.stock) {
                 return res.send("Quantity melebihi stock");
             }
@@ -361,13 +386,19 @@ class Controller {
 
             res.redirect("/cart");
         } catch (error) {
-            console.log(error);
-            res.send(error);
+            if (error.name === "SequelizeValidationError") {
+                let errors = error.errors.map(el => el.message)
+                res.redirect(`/cart?errors=${errors}&productId=${productId}`);
+            } else {
+                res.send(error)
+            }
         }
     }
 
     static async checkout(req, res) {
         try {
+            const { errors } = req.query
+
             const customerId = req.session.userId
 
             const order = await Order.findOne({
@@ -399,6 +430,8 @@ class Controller {
                 title: "Checkout",
                 order,
                 orderItems,
+                formatRp,
+                errors
             });
         } catch (error) {
             console.log(error);
@@ -456,8 +489,12 @@ class Controller {
 
             res.send("Order berhasil dibuat");
         } catch (error) {
-            console.log(error);
-            res.send(error);
+            if (error.name === "SequelizeValidationError") {
+                let errors = error.errors.map(el => el.message)
+                res.redirect(`/checkout?errors=${errors}`);
+            } else {
+                res.send(error)
+            }
         }
     }
 
@@ -479,6 +516,7 @@ class Controller {
             res.render("orders", {
                 title: "My Orders",
                 orders,
+                formatRp
             });
         } catch (error) {
             console.log(error);

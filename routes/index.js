@@ -10,7 +10,6 @@ router.post('/register', Controller.postRegister)
 
 // MIDDLEWARE
 router.use((req, res, next) => {
-
     if (!req.session.userId) {
         res.redirect('/login?message=You must be login first!')
     } else {
@@ -22,7 +21,6 @@ router.use((req, res, next) => {
 router.post('/logout', Controller.logout)
 
 const isCustomer = function (req, res, next) {
-
     if (req.session.userId && req.session.role !== 'customer') {
         res.redirect('/?message=You have no access!')
     } else {

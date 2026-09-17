@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    get subTotal() {
+      return this.priceAtPurchase * this.quantity
+    }
+
     static associate(models) {
       // define association here
       OrderItem.belongsTo(models.Order, {
@@ -21,7 +25,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   OrderItem.init({
-    quantity: DataTypes.INTEGER,
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: {
+          args: [1],
+          msg: "Quantity must be at least 1",
+        }
+      }
+    },
     priceAtPurchase: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER,
     OrderId: DataTypes.INTEGER
