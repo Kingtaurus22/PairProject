@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title><%= title %></title>
+  </head>
+
+  <body>
+    <a href="/cart">← Back to Cart</a>
+
+    <h1>Checkout</h1>
+
+    <h2>Order Summary</h2>
+
+    <% orderItems.forEach(item => { %>
+      <div>
+        <h3>
+          <%= item.Product.productName %>
+        </h3>
+
+        <p>
+          Price:
+          Rp <%= item.priceAtPurchase %>
+        </p>
+
+        <p>
+          Quantity:
+          <%= item.quantity %>
+        </p>
+
+        <p>
+          Subtotal:
+          Rp <%= item.priceAtPurchase * item.quantity %>
+        </p>
+
+        <hr />
+      </div>
+    <% }) %>
+
+    <h2>
+      Total:
+      Rp <%= order.totalAmount %>
+    </h2>
+
+    <h2>Payment Method</h2>
+
+    <form action="/checkout" method="POST">
+      <label>
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="Bank Transfer"
+          required
+        />
+        Bank Transfer
+      </label>
+
+      <br />
+
+      <label>
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="E-Wallet"
+        />
+        E-Wallet
+      </label>
+
+      <br />
+
+      <label>
+        <input
+          type="radio"
+          name="paymentMethod"
+          value="Cash"
+        />
+        Cash
+      </label>
+
+      <br /><br />
+
+      <button type="submit">
+        Place Order
+      </button>
+    </form>
+  </body>
+</html>

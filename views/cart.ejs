@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title><%= title %></title>
+  </head>
+
+  <body>
+    <a href="/">← Back to Products</a>
+
+    <h1>Shopping Cart</h1>
+
+    <% orderItems.forEach(item => { %>
+      <div>
+        <h2>
+          <%= item.Product.productName %>
+        </h2>
+
+        <p>
+          Price:
+          Rp <%= item.priceAtPurchase %>
+        </p>
+
+        <div>
+          <form
+            action="/orders/cart/update/<%= item.Product.id %>"
+            method="POST"
+            style="display: inline;"
+          >
+            <input
+              type="hidden"
+              name="quantity"
+              value="<%= item.quantity - 1 %>"
+            />
+
+            <button type="submit">
+              -
+            </button>
+          </form>
+
+          <span>
+            <%= item.quantity %>
+          </span>
+
+          <form
+            action="/orders/cart/update/<%= item.Product.id %>"
+            method="POST"
+            style="display: inline;"
+          >
+            <input
+              type="hidden"
+              name="quantity"
+              value="<%= item.quantity + 1 %>"
+            />
+
+            <button type="submit">
+              +
+            </button>
+          </form>
+        </div>
+
+        <br />
+
+        <form
+          action="/orders/cart/remove/<%= item.Product.id %>"
+          method="POST"
+        >
+          <button type="submit">
+            Remove
+          </button>
+        </form>
+
+        <hr />
+      </div>
+    <% }) %>
+
+    <h2>
+      Total:
+      Rp <%= order.totalAmount %>
+    </h2>
+
+    <form action="/checkout" method="GET">
+        <button type="submit">Checkout</button>
+    </form>
+  </body>
+</html>

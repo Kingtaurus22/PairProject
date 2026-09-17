@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title><%= title %></title>
+  </head>
+
+  <body>
+    <h1>Vendra</h1>
+
+    <form action="/" method="GET">
+  <input
+    type="text"
+    name="search"
+    placeholder="Search product..."
+    value="<%= search || '' %>"
+  />
+
+  <select name="sort" onchange="this.form.submit()">
+    <option value="">Newest</option>
+
+    <option
+      value="price_asc"
+      <%= sort === "price_asc" ? "selected" : "" %>
+    >
+      Price: Low to High
+    </option>
+
+    <option
+      value="price_desc"
+      <%= sort === "price_desc" ? "selected" : "" %>
+    >
+      Price: High to Low
+    </option>
+  </select>
+
+  <button type="submit">Search</button>
+</form>
+
+    <h2>Products</h2>
+
+    <% if (products.length === 0) { %>
+
+      <p>Product tidak ditemukan.</p>
+
+    <% } else { %>
+
+      <% products.forEach(product => { %>
+
+        <div>
+          <h3>
+            <a href="/products/<%= product.id %>"><%= product.productName %></a>
+          </h3>
+
+          <p>
+            Price: Rp <%= product.price %>
+          </p>
+
+          <p>
+            Stock: <%= product.stock %>
+          </p>
+
+          <p>
+            Category:
+            <%= product.Category.categoryName %>
+          </p>
+        </div>
+
+        <hr />
+
+      <% }) %>
+
+    <% } %>
+  </body>
+</html>
