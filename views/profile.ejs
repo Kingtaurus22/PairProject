@@ -1,225 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-  <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
 
-  <title>
-    <%= title %>
-  </title>
+    <link
+      rel="stylesheet"
+      href="/profile/profile.css"
+    />
+  </head>
 
-  <link rel="stylesheet" href="/profile/profile.css" />
-</head>
+  <body>
 
-<body>
+    <div class="page-container">
 
-  <div class="page-container">
+      
+      <header class="navbar">
 
-    <!-- NAVBAR -->
-    <header class="navbar">
+        <div class="brand">
 
-      <div class="brand">
+          <div class="brand-logo">
+            V
+          </div>
 
-        <div class="brand-logo">
-          V
-        </div>
-
-        <div class="brand-info">
-          <h1>Vendra</h1>
-          <span>Marketplace</span>
-        </div>
-
-      </div>
-
-
-      <div class="navbar-actions">
-
-        <a href="/" class="nav-link">
-          Products
-        </a>
-
-        <a href="/cart" class="nav-link">
-          Cart
-        </a>
-
-        <a href="/orders" class="nav-link">
-          My Orders
-        </a>
-
-        <a href="/profile" class="profile-button">
-          <%= user.username %>
-        </a>
-
-      </div>
-
-    </header>
-
-
-    <!-- PROFILE -->
-    <main class="profile-section">
-
-      <div class="section-label">
-        VENDRA ACCOUNT
-      </div>
-
-
-      <div class="profile-header">
-
-        <div>
-
-          <h2>
-            My Profile
-          </h2>
-
-          <p>
-            Manage your account information
-          </p>
+          <div class="brand-info">
+            <h1>Vendra</h1>
+            <span>Marketplace</span>
+          </div>
 
         </div>
 
-      </div>
+
+        <div class="navbar-actions">
+
+          <a href="/" class="nav-link">
+            Products
+          </a>
+
+          <a href="/cart" class="nav-link">
+            Cart
+          </a>
+
+          <a href="/orders" class="nav-link">
+            My Orders
+          </a>
+
+          <a href="/profile" class="profile-button">
+            <%= user.username %>
+          </a>
+
+        </div>
+
+      </header>
 
 
-      <!-- PROFILE CARD -->
-      <div class="profile-card">
+      
+      <main class="profile-section">
 
-        <!-- EDIT BUTTON -->
-        <% if (profile) { %>
+        <div class="section-label">
+          VENDRA ACCOUNT
+        </div>
 
-          <div class="edit-profile-wrapper">
 
-            <a href="/profile/edit" class="edit-button">
-              Edit Profile
-            </a>
+        <div class="profile-header">
+
+          <div>
+
+            <h2>
+              My Profile
+            </h2>
+
+            <p>
+              Manage your account information
+            </p>
 
           </div>
 
-          <% } else { %>
+        </div>
+
+
+        
+        <div class="profile-card">
+
+          
+          <% if (profile) { %>
 
             <div class="edit-profile-wrapper">
-              <a href="/profile/edit" class="edit-button">Complete Profile</a>
+
+              <a
+                href="/profile/edit"
+                class="edit-button"
+              >
+                Edit Profile
+              </a>
+
+            </div>
+
+         <% } else { %>
+
+            <div class="edit-profile-wrapper">
+                <a href="/profile/edit" class="edit-button">Complete Profile</a>
             </div>
 
             <% } %>
 
 
-              <!-- PROFILE HEADER -->
-              <div class="profile-card-header">
+          
+          <div class="profile-card-header">
 
-                <div class="profile-icon">
-                  <%= user.username.charAt(0).toUpperCase() %>
-                </div>
+            <div class="profile-icon">
+              <%= user.username.charAt(0).toUpperCase() %>
+            </div>
 
-                <div>
+            <div>
 
-                  <h3>
-                    <%= user.username %>
-                  </h3>
+              <h3>
+                <%= user.username %>
+              </h3>
 
-                  <span>
-                    <%= user.role %>
-                  </span>
+              <span>
+                <%= user.role %>
+              </span>
 
-                </div>
+            </div>
 
-              </div>
-
-
-              <div class="profile-divider"></div>
+          </div>
 
 
-              <!-- PROFILE INFORMATION -->
-              <div class="profile-info">
-
-                <!-- USERNAME -->
-                <div class="info-item">
-
-                  <span class="info-label">
-                    Username
-                  </span>
-
-                  <p>
-                    <%= user.username %>
-                  </p>
-
-                </div>
+          <div class="profile-divider"></div>
 
 
-                <!-- EMAIL -->
-                <div class="info-item">
+          
+          <div class="profile-info">
 
-                  <span class="info-label">
-                    Email
-                  </span>
+           
+            <div class="info-item">
 
-                  <p>
-                    <%= user.email %>
-                  </p>
+              <span class="info-label">
+                Username
+              </span>
 
-                </div>
+              <p>
+                <%= user.username %>
+              </p>
 
-
-                <!-- FULL NAME -->
-                <div class="info-item">
-
-                  <span class="info-label">
-                    Full Name
-                  </span>
-
-                  <p>
-                    <%= profile ? profile.fullName || "-" : "-" %>
-                  </p>
-
-                </div>
+            </div>
 
 
-                <!-- PHONE NUMBER -->
-                <div class="info-item">
+            
+            <div class="info-item">
 
-                  <span class="info-label">
-                    Phone Number
-                  </span>
+              <span class="info-label">
+                Email
+              </span>
 
-                  <p>
-                    <%= profile ? profile.phoneNumber || "-" : "-" %>
-                  </p>
+              <p>
+                <%= user.email %>
+              </p>
 
-                </div>
-
-
-                <!-- ADDRESS -->
-                <div class="info-item address-item">
-
-                  <span class="info-label">
-                    Address
-                  </span>
-
-                  <p>
-                    <%= profile ? profile.address || "-" : "-" %>
-                  </p>
-
-                </div>
-
-              </div>
+            </div>
 
 
-              <!-- ACTION -->
-              <div class="profile-actions">
+            
+            <div class="info-item">
 
-                <a href="/" class="back-button">
-                  ← Back to Products
-                </a>
+              <span class="info-label">
+                Full Name
+              </span>
 
-              </div>
+              <p>
+                <%= profile ? profile.fullName || "-" : "-" %>
+              </p>
 
-      </div>
+            </div>
 
-    </main>
 
-  </div>
+            <div class="info-item">
 
-</body>
+              <span class="info-label">
+                Phone Number
+              </span>
 
+              <p>
+                <%= profile ? profile.phoneNumber || "-" : "-" %>
+              </p>
+
+            </div>
+
+
+            
+            <div class="info-item address-item">
+
+              <span class="info-label">
+                Address
+              </span>
+
+              <p>
+                <%= profile ? profile.address || "-" : "-" %>
+              </p>
+
+            </div>
+
+          </div>
+
+
+        
+          <div class="profile-actions">
+
+            <a
+              href="/"
+              class="back-button"
+            >
+              ← Back to Products
+            </a>
+
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </body>
 </html>

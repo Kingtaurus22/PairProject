@@ -17,7 +17,7 @@
 
   <div class="page-container">
 
-    <!-- NAVBAR -->
+    
     <header class="navbar">
 
       <div class="brand">
@@ -48,12 +48,16 @@
           <%= username %>
         </a>
 
+        <form action="/logout" method="POST">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+
       </div>
 
     </header>
 
 
-    <!-- SEARCH & FILTER -->
+    
     <form action="/" method="GET" class="filter-card">
 
       <div class="search-box">
@@ -109,7 +113,7 @@
     </form>
 
 
-    <!-- PRODUCTS -->
+    
 
     <section class="products-section">
 

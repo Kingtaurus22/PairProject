@@ -20,31 +20,32 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Order.init({
-    totalOngkir: {
-      type: DataTypes.INTEGER,
-      defaultValue: 5000,
-    },
-    totalAmount: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-    paymentMethod: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        paymentMethodRequired(value) {
-          if (this.status !== "Cart" && !value) {
-            throw new Error(
-              "Please select a payment method"
-            );
-          }
+  Order.init(
+    {
+      totalOngkir: {
+        type: DataTypes.INTEGER,
+        defaultValue: 5000,
+      },
+      totalAmount: DataTypes.INTEGER,
+      status: DataTypes.STRING,
+      paymentMethod: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          paymentMethodRequired(value) {
+            if (this.status !== "Cart" && !value) {
+              throw new Error("Please select a payment method");
+            }
+          },
         },
       },
+      CustomerId: DataTypes.INTEGER,
+      paidAt: DataTypes.DATE,
     },
-    CustomerId: DataTypes.INTEGER,
-    paidAt: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'Order',
-  });
+    {
+      sequelize,
+      modelName: "Order",
+    },
+  );
   return Order;
 };
