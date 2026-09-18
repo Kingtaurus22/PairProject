@@ -7,13 +7,13 @@
 
     <title>Register</title>
 
-    <!-- Bootstrap -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
 
-    <!-- CSS -->
+   
     <link rel="stylesheet" href="/auth/style.css" />
 </head>
 
@@ -47,12 +47,12 @@
         <div class="auth-card">
             <div class="row g-0 h-100">
 
-                <!-- LEFT PANEL -->
+                
                 <div class="col-lg-5">
                     <section class="welcome-panel">
                         <div class="welcome-content">
 
-                            <!-- LOGO -->
+                           
                             <center>
                                 <div class="brand-logo">
                                     <i class="bi bi-bag-heart-fill"></i>
@@ -71,7 +71,7 @@
                                 </p>
                             </center>
 
-                            <!-- SHOPPING ILLUSTRATION -->
+                            
                             <div class="shopping-illustration">
                                 <div class="illustration-circle"></div>
 
@@ -90,7 +90,7 @@
                                 <div class="leaf leaf-3"></div>
                             </div>
 
-                            <!-- FEATURES -->
+                           
                             <div class="row features">
                                 <div class="col-4">
                                     <div class="feature">
@@ -129,7 +129,7 @@
                                 </div>
                             </div>
 
-                            <!-- FOOTER -->
+                            
                             <div class="welcome-footer">
                                 <span></span>
                                 <p>Shop Smart, Live Better</p>
@@ -140,12 +140,12 @@
                     </section>
                 </div>
 
-                <!-- RIGHT PANEL -->
+                
                 <div class="col-lg-7">
                     <section class="form-panel">
                         <div class="form-wrapper">
 
-                            <!-- HEADER -->
+                            
                             <div class="form-header">
                                 <div>
                                     <span class="form-badge">
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
 
-                            <!-- ERROR -->
+                            
                             <% if (errors) { %>
                                 <% errors=errors.split(',') %>
                                     <% errors.forEach(el=> { %>
@@ -175,10 +175,10 @@
                                         <% }) %>
                                             <% } %>
 
-                                                <!-- REGISTER FORM -->
+                                                
                                                 <form action="/register" method="post">
 
-                                                    <!-- USERNAME -->
+                                                    
                                                     <div class="mb-3">
                                                         <label for="username" class="form-label">
                                                             Username
@@ -193,7 +193,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- EMAIL -->
+                                                   
                                                     <div class="mb-3">
                                                         <label for="email" class="form-label">
                                                             Email Address
@@ -207,7 +207,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- ROLE -->
+                                                    
                                                     <div class="mb-3">
                                                         <label for="role" class="form-label">
                                                             Role
@@ -232,7 +232,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- PASSWORD -->
+                                                    
                                                     <div class="mb-3">
                                                         <label for="password" class="form-label">
                                                             Password
@@ -251,7 +251,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <!-- BUTTON -->
+                                                    
                                                     <button type="submit" class="btn btn-signin w-100 mt-3">
                                                         <i class="bi bi-person-plus me-2"></i>
                                                         Create Account
@@ -259,14 +259,14 @@
 
                                                 </form>
 
-                                                <!-- LINE -->
+                                               
                                                 <div class="divider">
                                                     <span></span>
                                                     <p>OR</p>
                                                     <span></span>
                                                 </div>
 
-                                                <!-- LOGIN -->
+                                               
                                                 <div class="register-section">
                                                     <p>
                                                         Already have an account?
@@ -285,7 +285,7 @@
         </div>
     </main>
 
-    <!-- PASSWORD TOGGLE -->
+    
     <script>
         const togglePassword =
             document.getElementById("togglePassword");

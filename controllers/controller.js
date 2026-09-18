@@ -525,6 +525,9 @@ class Controller {
 
   static async placeOrder(req, res) {
     try {
+      console.log("USER ID:", req.session.userId);
+      console.log("ROLE:", req.session.role);
+
       const customerId = req.session.userId;
 
       const { paymentMethod } = req.body;
@@ -546,11 +549,11 @@ class Controller {
         order: [["createdAt", "ASC"]],
       });
 
-      //   for (const item of orderItems) {
-      //     if (item.quantity > item.Product.stock) {
-      //       return res.send(`Stock ${item.Product.productName} tidak mencukupi`);
-      //     }
-      //   }
+      for (const item of orderItems) {
+        if (item.quantity > item.Product.stock) {
+          return res.send(`Stock ${item.Product.productName} tidak mencukupi`);
+        }
+      }
 
       for (const item of orderItems) {
         item.Product.stock -= item.quantity;
@@ -563,7 +566,7 @@ class Controller {
 
       await order.save();
 
-      res.send("Order berhasil dibuat");
+      res.redirect(`/orders`);
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         let errors = error.errors.map((el) => el.message);

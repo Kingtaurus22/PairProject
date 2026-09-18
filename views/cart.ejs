@@ -17,7 +17,7 @@
 
   <div class="page-container">
 
-    <!-- NAVBAR -->
+    
     <header class="navbar">
 
       <div class="brand">
@@ -61,7 +61,7 @@
     </header>
 
 
-    <!-- CART CONTENT -->
+    
 
     <main class="cart-section">
 
@@ -92,7 +92,7 @@
       </div>
 
 
-      <!-- ERROR -->
+     
 
       <% if (errors) { %>
 
@@ -103,7 +103,7 @@
       <% } %>
 
 
-      <!-- CART EMPTY -->
+      
 
       <% if (orderItems.length === 0) { %>
 
@@ -128,7 +128,7 @@
         </div>
 
 
-      <!-- CART HAS ITEMS -->
+      
 
       <% } else { %>
 
@@ -136,7 +136,7 @@
         <div class="cart-layout">
 
 
-          <!-- CART ITEMS -->
+          
 
           <div class="cart-items">
 
@@ -145,7 +145,7 @@
               <div class="cart-item">
 
 
-                <!-- IMAGE -->
+               
 
                 <div class="cart-item-image">
 
@@ -157,7 +157,7 @@
                 </div>
 
 
-                <!-- PRODUCT -->
+               
 
                 <div class="cart-item-content">
 
@@ -176,7 +176,7 @@
                   </p>
 
 
-                  <!-- QUANTITY + REMOVE -->
+                  
 
                   <div class="cart-item-footer">
 
@@ -255,7 +255,7 @@
                     </div>
 
 
-                    <!-- REMOVE -->
+                   
 
                     <form
                       action="/orders/cart/remove/<%= item.Product.id %>"
@@ -274,7 +274,7 @@
                   </div>
 
 
-                  <!-- ERROR -->
+                  
 
                   <% if (errors && productId==item.Product.id) { %>
 
@@ -293,7 +293,7 @@
           </div>
 
 
-          <!-- ORDER SUMMARY -->
+          
 
           <aside class="summary-card">
 
@@ -303,70 +303,42 @@
 
 
             <div class="summary-row">
-
               <span>
                 Products
               </span>
-
               <span>
                 <%= orderItems.length %>
               </span>
-
             </div>
-
-
             <div class="summary-row">
-
               <span>
                 Total Ongkir
               </span>
-
               <span>
                 <%= formatRp(order.totalOngkir) %>
               </span>
-
             </div>
-
-
             <div class="summary-divider"></div>
-
-
             <div class="summary-row total-row">
-
               <span>
                 Total
               </span>
-
               <strong>
                 <%= formatRp(order.totalAmount) %>
               </strong>
-
             </div>
-
-
             <form action="/checkout" method="GET">
-
               <button
                 type="submit"
                 class="checkout-button"
               >
                 Checkout
               </button>
-
             </form>
-
           </aside>
-
-
         </div>
-
-
       <% } %>
-
     </main>
-
   </div>
-
 </body>
-
 </html>
